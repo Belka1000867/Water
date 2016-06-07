@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Water</string>
+
+    <string name="bottomnavigation.item.settings">Settings</string>
+    <string name="bottomnavigation.item.statistics">Statistics</string>
+    <string name="bottomnavigation.item.main">Main</string>
+    <string name="bottomnavigation.item.smth">Something</string>
+    <string name="bottomnavigation.item.reminders">Reminders</string>
+</resources>
