@@ -5,16 +5,17 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.home.bel.water.R;
+import com.home.bel.water.utils.AppConstants;
 
 import org.androidannotations.annotations.EFragment;
 
 /**
- * Created by bel on 04.06.16.
+ * Created by bel on 07.06.16.
  */
-@EFragment(R.layout.fragment_statistics)
-public class StatisticsFragment extends Fragment {
+@EFragment(R.layout.fragment_forth)
+public class ForthFragment extends Fragment {
 
-    final static String TAG = "Debug_StatFragment";
+    final static String TAG = "Debug_ForthFragment";
 
     @Override
     public void onAttach(Context context) {

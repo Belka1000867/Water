@@ -5,9 +5,6 @@ package com.home.bel.water.utils;
  */
 public class AppConstants {
 
-    /* Number of pages in bottom navigation menu */
-    public final static int PAGE_COUNT = 5;
-
     /* Bottom Navigation Menu Positions */
     public final static int BOT_NAV_POSITION_SETTINGS = 0;
     public final static int BOT_NAV_POSITION_STATISTICS = 1;

@@ -1,9 +1,16 @@
 <resources>
     <string name="app_name">Water</string>
 
+    <!-- Bottom Navigation -->
+
     <string name="bottomnavigation.item.settings">Settings</string>
     <string name="bottomnavigation.item.statistics">Statistics</string>
     <string name="bottomnavigation.item.main">Main</string>
     <string name="bottomnavigation.item.smth">Something</string>
     <string name="bottomnavigation.item.reminders">Reminders</string>
+
+    <!-- Settings -->
+    <string name="preferences.category.first">First</string>
+    <string name="preferences.category.second">Second</string>
+
 </resources>

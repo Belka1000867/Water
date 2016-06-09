@@ -2,19 +2,15 @@ package com.home.bel.water;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.FrameLayout;
-
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.home.bel.water.ui.ForthFragment_;
 import com.home.bel.water.ui.MainFragment_;
-import com.home.bel.water.ui.RemindersFragment_;
+import com.home.bel.water.ui.ReminderFragment_;
 import com.home.bel.water.ui.SettingsFragment_;
 import com.home.bel.water.ui.StatisticsFragment_;
 import com.home.bel.water.utils.AppConstants;
@@ -31,15 +27,12 @@ import org.androidannotations.annotations.ViewById;
  * Activity implements Listeners to connect two fragments
  */
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity implements AHBottomNavigation.OnTabSelectedListener, MainFragment_.MainFragmentListener{
+public class MainActivity extends AppCompatActivity implements AHBottomNavigation.OnTabSelectedListener, MainFragment_.MainFragmentListener {
 
     final static String TAG = "Debug_MainActivity";
 
     @ViewById(R.id.framelayout_main)
     FrameLayout mFrameLayout;
-
-    @ViewById(R.id.viewpager_main)
-    ViewPager mViewPager;
 
     @ViewById(R.id.bottom_navigation)
     AHBottomNavigation mBottomNavigation;
@@ -52,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
-                .add(R.id.framelayout_main, new MainFragment_(), "Main")
+                .add(R.id.framelayout_main, new MainFragment_())
                 .commit();
     }
 
@@ -66,11 +59,33 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
     public void onTabSelected(int position, boolean wasSelected) {
         Log.d(TAG, "Position " + position + " was selected" + wasSelected);
         if(!wasSelected) {
-            getSupportFragmentManager().beginTransaction()
-                .replace(R.id.viewpager_main, getFragment(position))
-                .addToBackStack(null)
-                .commit();
 
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+            switch (position) {
+                case AppConstants.BOT_NAV_POSITION_SETTINGS:
+                    fragmentTransaction.replace(R.id.framelayout_main, new SettingsFragment_(), AppConstants.BOT_NAV_ITEM_SETTINGS);
+                    break;
+                case AppConstants.BOT_NAV_POSITION_STATISTICS:
+                    fragmentTransaction.replace(R.id.framelayout_main, new StatisticsFragment_(), AppConstants.BOT_NAV_ITEM_SETTINGS);
+                    break;
+                case AppConstants.BOT_NAV_POSITION_MAIN:
+                    fragmentTransaction.replace(R.id.framelayout_main, new MainFragment_(), AppConstants.BOT_NAV_ITEM_SETTINGS);
+                    break;
+                case AppConstants.BOT_NAV_POSITION_FORTH:
+                    fragmentTransaction.replace(R.id.framelayout_main, new ForthFragment_(), AppConstants.BOT_NAV_ITEM_FORTH);
+                    break;
+                case AppConstants.BOT_NAV_POSITION_REMINDERS:
+                    fragmentTransaction.replace(R.id.framelayout_main, new ReminderFragment_(), AppConstants.BOT_NAV_ITEM_SETTINGS);
+                    break;
+                default:
+                    Log.d(TAG, AppConstants.ERROR + "There is no action for such position!");
+                    break;
+            }
+
+            fragmentTransaction
+                    .addToBackStack(null)
+                    .commit();
         }
     }
 
@@ -120,59 +135,13 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
         mBottomNavigation.setOnTabSelectedListener(this);
     }
 
-    private Fragment getFragment(int position){
-        Fragment fragment;
-        switch (position) {
-            case AppConstants.BOT_NAV_POSITION_SETTINGS:
-                fragment = new SettingsFragment_();
-                fragmentTransaction.replace(R.id.framelayout_main, new SettingsFragment_(), AppConstants.BOT_NAV_ITEM_SETTINGS);
-                break;
-            case AppConstants.BOT_NAV_POSITION_STATISTICS:
-                fragmentTransaction.replace(R.id.framelayout_main, new StatisticsFragment_(), AppConstants.BOT_NAV_ITEM_SETTINGS);
-                break;
-            case AppConstants.BOT_NAV_POSITION_MAIN:
-                fragmentTransaction.replace(R.id.framelayout_main, new MainFragment_(), AppConstants.BOT_NAV_ITEM_SETTINGS);
-                break;
-            case AppConstants.BOT_NAV_POSITION_FORTH:
+/* MainFragment_.MainFragmentListener functions */
 
-                break;
-            case AppConstants.BOT_NAV_POSITION_REMINDERS:
-                fragmentTransaction.replace(R.id.framelayout_main, new RemindersFragment_(), AppConstants.BOT_NAV_ITEM_SETTINGS);
-                break;
-            default:
-                Log.d(TAG, AppConstants.ERROR + "There is no action for such position!");
-                break;
-        }
-        return fragment;
-    }
-
-/*
-*    MainFragmentListener functions
-* */
     @Override
     public void showAmountOfGlassesLeft(int glassesLeft) {
         mBottomNavigation.setNotification(String.valueOf(glassesLeft), AppConstants.BOT_NAV_POSITION_MAIN);
     }
 
-    /* Pager for changing the fragment on the main part of the screen */
+/* End of MainFragment_.MainFragmentListener functions */
 
-    private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
-
-        public MyFragmentPagerAdapter(FragmentManager fm) {
-            super(fm);
-            Log.d(TAG, "MyFragmentPagerAdapter()");
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            Log.d(TAG, "getItem(), position = " + position);
-            return getFragment(position);
-        }
-
-        @Override
-        public int getCount() {
-            return AppConstants.PAGE_COUNT;
-        }
-
-    }
 }
