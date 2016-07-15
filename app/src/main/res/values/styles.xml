@@ -9,4 +9,24 @@
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
     </style>
 
+    <style name="Water.Preference.Title" parent="Base.TextAppearance.AppCompat.Large">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingTop">@dimen/preference_title_padding</item>
+        <item name="android:paddingLeft">@dimen/preference_title_padding</item>
+        <item name="android:paddingBottom">@dimen/preference_title_padding</item>
+    </style>
+
+    <style name="Water.Preference.Value" parent="Base.TextAppearance.AppCompat.Medium">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorPrefTitle</item>
+    </style>
+
+    <style name="Water.Preference.Button" parent="Base.TextAppearance.AppCompat.Button">
+        <item name="android:layout_centerVertical">true</item>
+        <!--<item name="android:background">@android:color/transparent</item>-->
+    </style>
+
+
 </resources>

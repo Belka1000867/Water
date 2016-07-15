@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    >
+
+    <TextView
+        android:id="@+id/tv_weight_title"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="@string/preferences_title_weight"
+        style="@style/Water.Preference.Title" />
+
+    <TextView
+        android:id="@+id/tv_weight_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        style="@style/Water.Preference.Value"
+        android:layout_weight="0.4"
+        android:text="500"
+        />
+
+    <Button
+        android:id="@+id/b_weight_kg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/preferences_weight_kg"
+        style="@style/Water.Preference.Button"
+        android:layout_weight="0.7"
+        />
+
+    <Button
+        android:id="@+id/b_weight_lb"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/preference_btn_between_buttons"
+        android:layout_marginStart="@dimen/preference_btn_between_buttons"
+        android:text="@string/preferences_weight_lb"
+        style="@style/Water.Preference.Button"
+        android:layout_weight="0.7"
+        />
+
+</LinearLayout>

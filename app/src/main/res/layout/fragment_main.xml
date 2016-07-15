@@ -4,9 +4,25 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/tv_main_waterAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Fragment Main"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tv_main_waterAmountLeftPercent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         />
+
+    <Button
+        android:id="@+id/b_main_drink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/btn_drink_selector"
+        />
+
 
 </LinearLayout>

@@ -4,11 +4,9 @@
 
 
     <ListView
-        android:id="@+id/listview_statistics"
+        android:id="@+id/listview_reminder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
-
-    </ListView>
+        />
 
 </RelativeLayout>

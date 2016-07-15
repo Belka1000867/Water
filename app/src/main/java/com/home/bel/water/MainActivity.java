@@ -2,12 +2,14 @@ package com.home.bel.water;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.FrameLayout;
+
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+
 import com.home.bel.water.ui.ForthFragment_;
 import com.home.bel.water.ui.MainFragment_;
 import com.home.bel.water.ui.ReminderFragment_;
@@ -39,13 +41,18 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
 
     @AfterViews
     void afterViews(){
-//  Create Bottom Navigation Menu
-        createBottomNavigationMenu();
+
+        final int defaultCurrentItem = AppConstants.BOT_NAV_POSITION_MAIN;
+
+//  Create Bottom Navigation Menu with current Item
+        createBottomNavigationMenu(defaultCurrentItem);
 
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
-                .add(R.id.framelayout_main, new MainFragment_())
+                .add(R.id.framelayout_main,
+                        createFragment(defaultCurrentItem),
+                        createItemDescription(defaultCurrentItem))
                 .commit();
     }
 
@@ -59,53 +66,29 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
     public void onTabSelected(int position, boolean wasSelected) {
         Log.d(TAG, "Position " + position + " was selected" + wasSelected);
         if(!wasSelected) {
-
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-
-            switch (position) {
-                case AppConstants.BOT_NAV_POSITION_SETTINGS:
-                    fragmentTransaction.replace(R.id.framelayout_main, new SettingsFragment_(), AppConstants.BOT_NAV_ITEM_SETTINGS);
-                    break;
-                case AppConstants.BOT_NAV_POSITION_STATISTICS:
-                    fragmentTransaction.replace(R.id.framelayout_main, new StatisticsFragment_(), AppConstants.BOT_NAV_ITEM_SETTINGS);
-                    break;
-                case AppConstants.BOT_NAV_POSITION_MAIN:
-                    fragmentTransaction.replace(R.id.framelayout_main, new MainFragment_(), AppConstants.BOT_NAV_ITEM_SETTINGS);
-                    break;
-                case AppConstants.BOT_NAV_POSITION_FORTH:
-                    fragmentTransaction.replace(R.id.framelayout_main, new ForthFragment_(), AppConstants.BOT_NAV_ITEM_FORTH);
-                    break;
-                case AppConstants.BOT_NAV_POSITION_REMINDERS:
-                    fragmentTransaction.replace(R.id.framelayout_main, new ReminderFragment_(), AppConstants.BOT_NAV_ITEM_SETTINGS);
-                    break;
-                default:
-                    Log.d(TAG, AppConstants.ERROR + "There is no action for such position!");
-                    break;
-            }
-
-            fragmentTransaction
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.framelayout_main,
+                            createFragment(position),
+                            createItemDescription(position)
+                    )
                     .addToBackStack(null)
                     .commit();
         }
     }
 
-    private void createBottomNavigationMenu(){
-//  Create bottom navigation items
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem(AppConstants.BOT_NAV_ITEM_SETTINGS, R.mipmap.ic_settings);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem(AppConstants.BOT_NAV_ITEM_STATISTICS, R.mipmap.ic_statistics);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(AppConstants.BOT_NAV_ITEM_MAIN, R.mipmap.ic_water);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem(AppConstants.BOT_NAV_ITEM_FORTH, R.mipmap.ic_launcher);
-        AHBottomNavigationItem item5 = new AHBottomNavigationItem(AppConstants.BOT_NAV_ITEM_REMINDERS, R.mipmap.ic_reminders);
+    private void createBottomNavigationMenu(int defaultCurrentItem){
 
-//  Add bottom navigation items
-        mBottomNavigation.addItem(item1);
-        mBottomNavigation.addItem(item2);
-        mBottomNavigation.addItem(item3);
-        mBottomNavigation.addItem(item4);
-        mBottomNavigation.addItem(item5);
+        for(int i = 0; i<5; i++){
+            //  Create bottom navigation item
+            AHBottomNavigationItem item =
+                    new AHBottomNavigationItem(createItemDescription(i),
+                                                createPicture(i));
+            //  Add bottom navigation item
+            mBottomNavigation.addItem(item);
+        }
 
 //  Set current item programmatically
-        mBottomNavigation.setCurrentItem(2, true);
+        mBottomNavigation.setCurrentItem(defaultCurrentItem, true);
 
 //  Set background color
         mBottomNavigation.setDefaultBackgroundColor(Color.parseColor("#56ABF8"));
@@ -135,6 +118,56 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
         mBottomNavigation.setOnTabSelectedListener(this);
     }
 
+    private Fragment createFragment(int position){
+        switch (position) {
+            case AppConstants.BOT_NAV_POSITION_SETTINGS:
+                return new SettingsFragment_();
+            case AppConstants.BOT_NAV_POSITION_STATISTICS:
+                return new StatisticsFragment_();
+            case AppConstants.BOT_NAV_POSITION_MAIN:
+                return new MainFragment_();
+            case AppConstants.BOT_NAV_POSITION_FORTH:
+                return new ForthFragment_();
+            case AppConstants.BOT_NAV_POSITION_REMINDERS:
+                return new ReminderFragment_();
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private String createItemDescription(int position){
+        switch (position){
+            case AppConstants.BOT_NAV_POSITION_SETTINGS:
+                return AppConstants.BOT_NAV_ITEM_SETTINGS;
+            case AppConstants.BOT_NAV_POSITION_STATISTICS:
+                return AppConstants.BOT_NAV_ITEM_STATISTICS;
+            case AppConstants.BOT_NAV_POSITION_MAIN:
+                return AppConstants.BOT_NAV_ITEM_MAIN;
+            case AppConstants.BOT_NAV_POSITION_FORTH:
+                return AppConstants.BOT_NAV_ITEM_FORTH;
+            case AppConstants.BOT_NAV_POSITION_REMINDERS:
+                return AppConstants.BOT_NAV_ITEM_REMINDERS;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    private int createPicture(int position){
+        switch (position){
+            case AppConstants.BOT_NAV_POSITION_SETTINGS:
+                return R.mipmap.ic_settings;
+            case AppConstants.BOT_NAV_POSITION_STATISTICS:
+                return R.mipmap.ic_statistics;
+            case AppConstants.BOT_NAV_POSITION_MAIN:
+                return R.mipmap.ic_water;
+            case AppConstants.BOT_NAV_POSITION_FORTH:
+                return R.mipmap.ic_launcher;
+            case AppConstants.BOT_NAV_POSITION_REMINDERS:
+                return R.mipmap.ic_reminders;
+        }
+        throw new IllegalArgumentException();
+    }
+
+
+
 /* MainFragment_.MainFragmentListener functions */
 
     @Override
@@ -142,6 +175,12 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
         mBottomNavigation.setNotification(String.valueOf(glassesLeft), AppConstants.BOT_NAV_POSITION_MAIN);
     }
 
-/* End of MainFragment_.MainFragmentListener functions */
+    @Override
+    public void changeTab(int position) {
+        mBottomNavigation.setCurrentItem(position);
+        onTabSelected(position, false);
+    }
+
+    /* End of MainFragment_.MainFragmentListener functions */
 
 }

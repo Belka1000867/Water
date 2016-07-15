@@ -29,8 +29,8 @@ public class ReminderListAdapter implements ListAdapter {
     final static String TAG = "Debug_StatListAdapter";
 
     public ReminderListAdapter(int[] times, Bundle events){
-        this.count = times.length;
         this.times = times;
+        count = times.length;
 
         start = events.getInt(ScheduleConstants.GET_UP, 0);
         end = events.getInt(ScheduleConstants.GO_TO_SLEEP);
@@ -88,15 +88,21 @@ public class ReminderListAdapter implements ListAdapter {
         Log.d(TAG, "getView(), position = " + position);
         ViewHolder viewHolder = new ViewHolder();
 
-        LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(R.layout.row_item_statistics, parent, false);
+        if(convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.row_item_statistics, parent, false);
 
-        viewHolder.rlRow = (RelativeLayout) convertView.findViewById(R.id.rl_stats_row);
-        viewHolder.tvTime = (TextView) convertView.findViewById(R.id.tv_stats_time);
-        viewHolder.ivDescription = (ImageView) convertView.findViewById(R.id.iv_stats_description);
-        viewHolder.ivIsWaterNeed = (ImageView) convertView.findViewById(R.id.iv_stats_water_need);
-        viewHolder.ivFaq = (ImageView) convertView.findViewById(R.id.iv_stats_faq);
-        convertView.setTag(viewHolder);
+            viewHolder.rlRow = (RelativeLayout) convertView.findViewById(R.id.layout_row_stats);
+            viewHolder.tvTime = (TextView) convertView.findViewById(R.id.tv_stats_time);
+            viewHolder.ivDescription = (ImageView) convertView.findViewById(R.id.iv_stats_description);
+            viewHolder.ivIsWaterNeed = (ImageView) convertView.findViewById(R.id.iv_stats_water_need);
+            viewHolder.ivFaq = (ImageView) convertView.findViewById(R.id.iv_stats_faq);
+            convertView.setTag(viewHolder);
+        }
+        else
+        {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
 
         int minuteAmount = times[position];
         int hour = minuteAmount / 60;
@@ -106,15 +112,10 @@ public class ReminderListAdapter implements ListAdapter {
 
         String time = hour + ":" + minuteString;
 
-        //RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        //relativeParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        //viewHolder.ivDescription.setLayoutParams(relativeParams);
-
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
 
         setDescriptionImage(position, viewHolder.ivDescription);
-
         viewHolder.tvTime.setLayoutParams(layoutParams);
         viewHolder.tvTime.setText(time);
         viewHolder.tvTime.setGravity(Gravity.CENTER);

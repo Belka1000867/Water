@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TextView
+        android:id="@+id/tv_volume_title"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="@string/preferences_title_volume"
+        style="@style/Water.Preference.Title"
+        />
+
+    <Button
+        android:id="@+id/b_pref_ml"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_toRightOf="@+id/tv_volume_title"
+        android:layout_toEndOf="@+id/tv_volume_title"
+        android:layout_centerVertical="true"
+        android:text="@string/preferences_volume_ml"
+        style="@style/Water.Preference.Button"
+        />
+
+    <Button
+        android:id="@+id/b_pref_oz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_toRightOf="@+id/b_pref_ml"
+        android:layout_toEndOf="@+id/b_pref_ml"
+        android:text="@string/preferences_volume_oz"
+        style="@style/Water.Preference.Button"
+        />
+
+</RelativeLayout>

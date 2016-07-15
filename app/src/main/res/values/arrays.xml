@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Arrays for Preferences -->
+    <!-- Food Ration -->
+    <string-array name="preferences_array_foodRation">
+        <item>Fruits, Vegetables</item>
+        <item>Meat, Fish, Eggs, Bread</item>
+    </string-array>
+    <string-array name="preferences_array_foodRationValues">
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+</resources>

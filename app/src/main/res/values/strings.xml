@@ -2,15 +2,42 @@
     <string name="app_name">Water</string>
 
     <!-- Bottom Navigation -->
+    <string name="bottomnavigation_item_settings">Settings</string>
+    <string name="bottomnavigation_item_statistics">Statistics</string>
+    <string name="bottomnavigation_item_main">Main</string>
+    <string name="bottomnavigation_item_smth">Something</string>
+    <string name="bottomnavigation_item_reminders">Reminders</string>
 
-    <string name="bottomnavigation.item.settings">Settings</string>
-    <string name="bottomnavigation.item.statistics">Statistics</string>
-    <string name="bottomnavigation.item.main">Main</string>
-    <string name="bottomnavigation.item.smth">Something</string>
-    <string name="bottomnavigation.item.reminders">Reminders</string>
+    <!-- Preferences -->
+    <string name="preferences_category_first">First</string>
+    <string name="preferences_category_second">Second</string>
+    <string name="preferences_category_application">Application settings</string>
 
-    <!-- Settings -->
-    <string name="preferences.category.first">First</string>
-    <string name="preferences.category.second">Second</string>
+    <!-- Titles -->
+    <string name="preferences_title_weight">Weight</string>
+    <string name="preferences_title_gender">Gender</string>
+    <string name="preferences_title_volume">Volume Unit</string>
+
+    <!-- Units -->
+    <string name="preferences_gender_male">Male</string>
+    <string name="preferences_gender_female">Female</string>
+    <string name="preferences_volume_ml">Ml</string>
+    <string name="preferences_volume_oz">Oz</string>
+    <string name="preferences_weight_kg">Kg</string>
+    <string name="preferences_weight_lb">Lb</string>
+
+    <!-- Preference keys for XML files
+    ! Do not change ! -->
+    <string name="preferences_key_weight">key_weight</string>
+    <string name="preferences_key_volume">key_volume</string>
+    <string name="preferences_key_gender_v4">key_gender</string>
+
+    <!-- Do not need -->
+    <string name="preferences.key.gender">key.gender</string>
+    <string name="preferences.key.gender_v2">key.gender.v2</string>
+    <string name="preferences.key.gender_v3">key_gender_v3</string>
+
+    <!-- End of Preferences -->
+
 
 </resources>

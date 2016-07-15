@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.home.bel.water.R;
@@ -26,7 +27,7 @@ public class ReminderFragment extends Fragment {
     private Bundle events;
     private final static int TIMES_LENGTH = 34;
 
-    @ViewById(R.id.listview_statistics)
+    @ViewById(R.id.listview_reminder)
     ListView mListView;
 
     @AfterViews
@@ -34,6 +35,7 @@ public class ReminderFragment extends Fragment {
         createSchedule();
         ReminderListAdapter reminderListAdapter = new ReminderListAdapter(times, events);
         mListView.setAdapter(reminderListAdapter);
+
     }
 
     @Override

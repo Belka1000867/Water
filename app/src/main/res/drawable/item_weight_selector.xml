@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_active="true"
+        android:drawable="@color/colorWaterBackground"/>
+
+    <item
+        android:state_single="true"
+        android:drawable="@color/colorAccent"/>
+
+    <item
+        android:state_activated="true"
+        android:drawable="@drawable/item_weight_state_activated"
+        />
+
+    <item
+        android:state_selected="true"
+        android:drawable="@drawable/item_weight_state_activated"
+        />
+
+    <item
+        android:drawable="@color/defaultListItemBg"
+        />
+
+</selector>
