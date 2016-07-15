@@ -6,8 +6,8 @@
     <dimen name="preference_title_margin_right">128dp</dimen>
     <dimen name="preference_title_margin_left">16dp</dimen>
 
-    <dimen name="preference_value_margin_left">32dp</dimen>
-    <dimen name="preference_value_margin_right">32dp</dimen>
+    <dimen name="preference_value_margin_left">28dp</dimen>
+    <dimen name="preference_value_margin_right">28dp</dimen>
 
     <dimen name="preference_btn_between_buttons">8dp</dimen>
     <dimen name="preference_btn_align_right">6dp</dimen>

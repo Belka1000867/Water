@@ -16,25 +16,20 @@
         android:id="@+id/b_pref_ml"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="28dp"
-        android:layout_marginStart="28dp"
-        android:layout_toRightOf="@+id/tv_volume_title"
-        android:layout_toEndOf="@+id/tv_volume_title"
-        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/b_pref_oz"
+        android:layout_toStartOf="@+id/b_pref_oz"
         android:text="@string/preferences_volume_ml"
-        style="@style/Water.Preference.Button"
+        android:background="@drawable/selector_preference_btn"
+        style="@style/Water.Preference.LeftButton"
         />
 
     <Button
         android:id="@+id/b_pref_oz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_toRightOf="@+id/b_pref_ml"
-        android:layout_toEndOf="@+id/b_pref_ml"
         android:text="@string/preferences_volume_oz"
-        style="@style/Water.Preference.Button"
+        android:background="@drawable/selector_preference_btn"
+        style="@style/Water.Preference.RightButton"
         />
 
 </RelativeLayout>

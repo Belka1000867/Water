@@ -16,10 +16,8 @@
         android:id="@+id/tv_weight_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_toLeftOf="@+id/b_weight_kg"
         android:layout_toStartOf="@+id/b_weight_kg"
-
         android:layout_toRightOf="@+id/tv_weight_title"
         android:layout_toEndOf="@+id/tv_weight_title"
         style="@style/Water.Preference.Value"
@@ -32,24 +30,18 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/b_weight_lb"
         android:layout_toStartOf="@+id/b_weight_lb"
-        android:background="@drawable/preference_btn_selector"
+        android:background="@drawable/selector_preference_btn"
         android:text="@string/preferences_weight_kg"
-        style="@style/Water.Preference.Button"
+        style="@style/Water.Preference.LeftButton"
         />
 
     <Button
         android:id="@+id/b_weight_lb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/preference_btn_between_buttons"
-        android:layout_marginStart="@dimen/preference_btn_between_buttons"
-        android:layout_marginRight="@dimen/preference_btn_align_right"
-        android:layout_marginEnd="@dimen/preference_btn_align_right"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:background="@drawable/preference_btn_selector"
+        android:background="@drawable/selector_preference_btn"
         android:text="@string/preferences_weight_lb"
-        style="@style/Water.Preference.Button"
+        style="@style/Water.Preference.RightButton"
         />
 
 </RelativeLayout>

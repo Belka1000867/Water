@@ -70,14 +70,12 @@ public abstract class TwoBtnPreference extends Preference implements View.OnClic
     }
 
     private void focusButton(Button btn){
-        btn.setBackgroundColor(Color.rgb(121, 218, 255));
+        btn.setActivated(true);
         btn.setEnabled(false);
-        btn.setTextColor(Color.rgb(255, 133, 0));
 
         final Button oppositeButton = getOppositeBtn(btn);
-        oppositeButton.setTextColor(Color.BLACK);
-        oppositeButton.setBackgroundResource(0);
         oppositeButton.setEnabled(true);
+        oppositeButton.setActivated(false);
     }
 
     private Button getOppositeBtn(Button button){

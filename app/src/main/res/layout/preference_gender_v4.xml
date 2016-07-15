@@ -16,26 +16,20 @@
         android:id="@+id/b_pref_male_v4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="28dp"
-        android:layout_marginStart="28dp"
         android:layout_toLeftOf="@+id/b_pref_female_v4"
         android:layout_toStartOf="@+id/b_pref_female_v4"
         android:text="@string/preferences_gender_male"
-        style="@style/Water.Preference.Button"
+        android:background="@drawable/selector_preference_btn"
+        style="@style/Water.Preference.LeftButton"
         />
 
     <Button
         android:id="@+id/b_pref_female_v4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/preference_btn_between_buttons"
-        android:layout_marginStart="@dimen/preference_btn_between_buttons"
-        android:layout_marginRight="@dimen/preference_btn_align_right"
-        android:layout_marginEnd="@dimen/preference_btn_align_right"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:text="@string/preferences_gender_female"
-        style="@style/Water.Preference.Button"
+        android:background="@drawable/selector_preference_btn"
+        style="@style/Water.Preference.RightButton"
         />
 
 </RelativeLayout>
