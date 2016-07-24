@@ -14,21 +14,21 @@ import com.home.bel.water.R;
 /**
  * Preference for water measurement : ML or OZ
  */
-public class WaterVolumePreference extends TwoBtnPreference {
+public class UnitTwoBtnPreference extends TwoBtnPreference {
 
-    public WaterVolumePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public UnitTwoBtnPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public WaterVolumePreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    public UnitTwoBtnPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public WaterVolumePreference(Context context, AttributeSet attrs) {
+    public UnitTwoBtnPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public WaterVolumePreference(Context context) {
+    public UnitTwoBtnPreference(Context context) {
         super(context);
     }
 

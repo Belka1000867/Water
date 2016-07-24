@@ -39,5 +39,10 @@
 
     <!-- End of Preferences -->
 
+    <!-- Notification -->
+    <string name="notification_ticker">Notification ticker</string>
+    <string name="notification_title">Notification title</string>
+    <string name="notification_text">Notification text</string>
+
 
 </resources>

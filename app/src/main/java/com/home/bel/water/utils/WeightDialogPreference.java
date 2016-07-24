@@ -65,16 +65,13 @@ public class WeightDialogPreference extends DialogPreference implements View.OnC
     }
 
     private void init(Context context){
-        Log.d(TAG, "init()");
-
         appData = AppData.getInstance(context);
-
-        setLayoutResource(R.layout.preference_weight);
 
 //      Set required UI for dialog
         Resources resources = context.getResources();
-//        String unit = appData.isWeightUnitKg() ? resources.getString(R.string.preferences_weight_kg) : resources.getString(R.string.preferences_weight_lb);
         String title = resources.getString(R.string.preferences_title_weight); // + "  [ " + unit + " ]" ;
+
+        setLayoutResource(R.layout.preference_weight);
 
         setDialogTitle(title);
         setDialogIcon(R.mipmap.ic_water);
@@ -115,34 +112,30 @@ public class WeightDialogPreference extends DialogPreference implements View.OnC
 
     @Override
     public void onClick(View v) {
-        double value = 0;
-        Button focusedButton = bKg;
-        switch (v.getId()){
-            case R.id.b_weight_kg:
-                focusedButton = bKg;
-                value = getWeight()/AppConstants.UNIT_VALUE_LB;
-                break;
-            case R.id.b_weight_lb:
-                focusedButton = bLb;
-                value = getWeight()*AppConstants.UNIT_VALUE_LB;
-                break;
+        double value;
+        Button focusedButton;
+
+        if(v.equals(bKg)){
+            focusedButton = bKg;
+            value = getWeight()/AppConstants.UNIT_VALUE_LB;
         }
+        else {
+            focusedButton = bLb;
+            value = getWeight()*AppConstants.UNIT_VALUE_LB;
+        }
+
         focusButton(focusedButton);
         saveValue(value);
     }
 
     private void focusButton(Button button){
-        //button.setBackgroundColor(Color.rgb(121, 218, 255));
         button.setActivated(true);
         button.setEnabled(false);
-        button.setTextColor(Color.rgb(255, 133, 0));
 
         boolean isUnitKg = button.equals(bKg);
 
         final Button oppositeButton = isUnitKg ? bLb : bKg;
-        //oppositeButton.setBackgroundResource(0);
         oppositeButton.setActivated(false);
-        oppositeButton.setTextColor(Color.BLACK);
         oppositeButton.setEnabled(true);
 
         appData.setWeightUnitKg(isUnitKg);
@@ -262,9 +255,6 @@ public class WeightDialogPreference extends DialogPreference implements View.OnC
                 case BTN_CANCEL:
                     Log.d(TAG, "Cancel clicked");
                     break;
-                default:
-                    Log.d(TAG, "Something clicked");
-                    break;
             }
         }
 
@@ -276,7 +266,6 @@ public class WeightDialogPreference extends DialogPreference implements View.OnC
             weight = position + AppConstants.LIST_WEIGHT_OFFSET_KG * unit;
 
             view.setSelected(true);
-//            mListView.setItemChecked(position, true);
         }
     }
 

@@ -16,6 +16,13 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".services.NotificationWakefulReceiver"/>
+
+        <!-- Service available only for this application -->
+        <service android:name=".services.NotificationIntentService"
+            android:exported="false"
+            />
+
     </application>
 
 </manifest>

@@ -25,7 +25,7 @@
             android:entryValues="@array/preferences_array_foodRationValues"
             />
 
-        <com.home.bel.water.utils.WaterVolumePreference
+        <com.home.bel.water.utils.UnitTwoBtnPreference
             android:key="@string/preferences_key_volume"
             android:defaultValue="@string/preferences_volume_ml"
             />
@@ -52,7 +52,7 @@
             <!--android:key="@string/preferences.key.gender_v3"-->
             <!--/>-->
 
-        <com.home.bel.water.utils.GenderPreferenceE
+        <com.home.bel.water.utils.GenderTwoBtnPreference
             android:key="@string/preferences_key_gender_v4"
             />
 
@@ -68,7 +68,6 @@
             android:title="Notifications"
             android:text="Notifications"
             android:defaultValue="true"
-            android:focusable="false"
             />
 
         <PreferenceScreen

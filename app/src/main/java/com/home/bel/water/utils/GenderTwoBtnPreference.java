@@ -9,21 +9,21 @@ import com.home.bel.water.R;
 /**
  * Preference for Gender : MALE or FEMALE
  */
-public class GenderPreferenceE extends TwoBtnPreference{
+public class GenderTwoBtnPreference extends TwoBtnPreference{
 
-    public GenderPreferenceE(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public GenderTwoBtnPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public GenderPreferenceE(Context context, AttributeSet attrs, int defStyleAttr) {
+    public GenderTwoBtnPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public GenderPreferenceE(Context context, AttributeSet attrs) {
+    public GenderTwoBtnPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public GenderPreferenceE(Context context) {
+    public GenderTwoBtnPreference(Context context) {
         super(context);
     }
 

@@ -1,7 +1,9 @@
 package com.home.bel.water;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -26,7 +28,8 @@ import org.androidannotations.annotations.ViewById;
  * 1. FrameLayout for fragments
  * 2. AHBottomNavigation for the Bottom Navigation Menu
  *
- * Activity implements Listeners to connect two fragments
+ * Activity implements Listeners to connect two fragments.
+ *
  */
 @EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity implements AHBottomNavigation.OnTabSelectedListener, MainFragment_.MainFragmentListener {
@@ -59,6 +62,12 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if(preferences.getBoolean(AppConstants.KEY_NOTIFICATION, true)){
+//            Intent service = new Intent(NotificationService.class);
+//            startService(service);
+        }
     }
 
 //  Listener for Bottom Navigation Menu

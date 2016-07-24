@@ -121,7 +121,7 @@ public class SettingsFragment extends PreferenceFragmentCompat  implements Share
                 Preference notificationExtraPreference = getPreferenceManager().findPreference(AppConstants.KEY_NOTIFICATION_EXTRA);
                 boolean enable = sharedPreferences.getBoolean(key, true);
                 Log.d(TAG, "Enabled" + enable);
-                notificationExtraPreference.setEnabled(!enable);
+//                notificationExtraPreference.setEnabled(!enable);
                 break;
 
         }
