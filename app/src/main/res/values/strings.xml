@@ -44,5 +44,14 @@
     <string name="notification_title">Notification title</string>
     <string name="notification_text">Notification text</string>
 
+    <!-- Errors -->
+    <string name="error_settings_empty_weight">Weight parameter is 0</string>
+
+    <!-- Dialog -->
+    <string name="dialog_button_positive">OK</string>
+
+
+    <!-- Dialog messages -->
+    <string name="dialog_message_empty_weight">Please, select your weight.</string>
 
 </resources>

@@ -1,13 +1,9 @@
 package com.home.bel.water.services;
 
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
@@ -31,8 +27,6 @@ public class NotificationIntentService extends IntentService {
     * Notifications will be served into the array, because we need
     * to send different text notifications to the user.
     * */
-
-
     private static final int NOTIFICATION_ID = 1;
 
     private static final String TAG = "Debug_NotifyService";

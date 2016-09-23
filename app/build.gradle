@@ -4,7 +4,7 @@ buildscript {
     }
     dependencies {
         // replace with the current version of the Android plugin
-        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.android.tools.build:gradle:2.2.0'
         // replace with the current version of the android-apt plugin
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
         classpath 'me.tatarka:gradle-retrolambda:3.2.5'
@@ -53,4 +53,9 @@ dependencies {
     compile "org.androidannotations:androidannotations-api:$AAVersion"
     compile 'com.aurelhubert:ahbottomnavigation:1.2.3'
     compile 'com.android.support:preference-v7:23.2.0'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    // Because RxAndroid releases are few and far between, it is recommended you also
+    // explicitly depend on RxJava's latest version for bug fixes and new features.
+    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
 }

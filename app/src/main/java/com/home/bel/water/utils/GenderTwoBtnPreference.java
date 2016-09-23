@@ -29,9 +29,8 @@ public class GenderTwoBtnPreference extends TwoBtnPreference{
 
     @Override
     void init(Context context) {
-        Resources resources = context.getResources();
-        setValueFirst(resources.getString(R.string.preferences_gender_male));
-        setValueSecond(resources.getString(R.string.preferences_gender_female));
+        setValueFirst(AppConstants.MALE);
+        setValueSecond(AppConstants.FEMALE);
 
         setBtnFirstId(R.id.b_pref_male_v4);
         setBtnSecondId(R.id.b_pref_female_v4);

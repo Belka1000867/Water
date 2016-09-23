@@ -2,7 +2,6 @@ package com.home.bel.water.utils;
 
 import android.content.Context;
 import android.database.DataSetObserver;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +25,7 @@ public class WeightDialogPreferenceListAdapter implements ListAdapter {
 
     WeightDialogPreferenceListAdapter(Context context){
         AppData appData = AppData.getInstance(context);
-        boolean isUnitKg = appData.isWeightUnitKg();
-        unit = isUnitKg ? AppConstants.UNIT_VALUE_KG : AppConstants.UNIT_VALUE_LB;
+        unit = appData.getWeightValue();
 
 //        long valueLong = PreferenceManager.getDefaultSharedPreferences(context).getLong(AppConstants.KEY_WEIGHT, 0);
 //        double valueDouble = Double.longBitsToDouble(valueLong);

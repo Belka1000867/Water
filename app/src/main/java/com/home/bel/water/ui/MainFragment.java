@@ -1,17 +1,17 @@
 package com.home.bel.water.ui;
 
+import android.app.IntentService;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
+import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.home.bel.water.R;
-import com.home.bel.water.utils.AppConstantFunctions;
+import com.home.bel.water.services.DBIntentService;
 import com.home.bel.water.utils.AppConstants;
 import com.home.bel.water.utils.AppData;
 
@@ -19,7 +19,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.sharedpreferences.Pref;
+
+import java.util.Locale;
 
 /**
  * fragment with the addition of water
@@ -27,25 +28,12 @@ import org.androidannotations.annotations.sharedpreferences.Pref;
 @EFragment(R.layout.fragment_main)
 public class MainFragment extends Fragment {
 
-    private double mWaterAmountDay;
-    private double mWaterAmountLeft;
-    private int mWaterAmountLeftPercent;
-
-    private Resources resources;
-    private SharedPreferences preferences;
-
-
-    private String sVolumeUnitMl;
-    private String sVolumeUnitOz;
+    private double dWaterAmountDay;
+    private double dWaterAmountDayLeft;
 
     private String sVolumeUnit;
-    private double dVolumeUnit;
-
-    private double dWeightUnit;
 
     private AppData appData;
-    //Preferences
-    private double weight;
 
     private MainFragmentListener mainFragmentListener;
 
@@ -57,41 +45,71 @@ public class MainFragment extends Fragment {
 
         void showAmountOfGlassesLeft(int glassesLeft);
 
+        void showAlarm(int id);
+
     }
 
     @ViewById(R.id.tv_main_waterAmount)
     TextView tvWaterAmount;
 
+    @ViewById(R.id.tv_main_waterAmountLeft)
+    TextView tvWaterAmountLeft;
+
+    @ViewById(R.id.tv_main_waterAmountLeft_title)
+    TextView tvWaterAmountLeftTitle;
+
     @ViewById(R.id.tv_main_waterAmountLeftPercent)
     TextView tvWaterAmountLeftPercent;
 
-    @ViewById(R.id.b_main_drink)
-    Button bDrink;
+    @ViewById(R.id.tv_main_glassesLeft)
+    TextView tvGlassesLeft;
 
     @AfterViews
     void afterViews(){
         Log.d(TAG, "afterViews()");
+
+        refreshTextWaterAmount();
+        refreshTextWaterAmountLeft();
     }
 
     @Click(R.id.b_main_drink)
     void clickDrink(){
-        double volumeDrink = 200;
+        double volumeValue = appData.getVolumeValue();
+        double dWaterLeft = appData.getWaterDayLeft();
+        double glassValue = AppConstants.GLASS_VOLUME / volumeValue;
 
-        getVolumeUnit();
+        dWaterLeft -= glassValue;
+        appData.setWaterDayLeft(dWaterLeft);
 
-        mWaterAmountLeft -= volumeDrink / dVolumeUnit;
+        double dWaterDrunk = appData.getWaterDay() - dWaterLeft;
+        appData.setWaterDayDrunk(dWaterDrunk);
 
-        String sWaterAmountLeft;
+        double leftDayPercent = appData.getWaterLeftPercentage();
+        double glassPercent = glassValue * AppConstants.PERCENTAGE_FULL / dWaterAmountDay;
+        leftDayPercent += glassPercent;
+        appData.setWaterLeftPercentage(leftDayPercent);
 
-        if(mWaterAmountLeft < 0){
-            sWaterAmountLeft = "Above the norm on " + Math.abs(mWaterAmountLeft) + sVolumeUnit;
-        }
-        else
-        {
-            sWaterAmountLeft = String.valueOf(mWaterAmountLeft) + sVolumeUnitMl;
-        }
+        refreshTextWaterAmountLeft();
+        writeDbDayData();
+    }
 
-        tvWaterAmountLeftPercent.setText(sWaterAmountLeft);
+    @Click(R.id.btnRefresh)
+    void clickRefresh(){
+        appData.refreshDayParameters();
+
+        refreshTextWaterAmount();
+        refreshTextWaterAmountLeft();
+
+        /*   --- REST API ---
+        *    Call Intent Service to work with Database
+        * */
+//        Intent intent = new Intent(getActivity(), DBIntentService.class);
+//        intent.setAction(AppConstants.);
+//        getActivity().startService(intent);
+        Log.d(TAG, "start service");
+
+//      SAVE DATA TO SQL DATABASE
+//
     }
 
     @Override
@@ -102,21 +120,15 @@ public class MainFragment extends Fragment {
         try {
             mainFragmentListener = (MainFragmentListener) context;
         } catch (Exception e) {
-            Log.d(TAG, AppConstants.ERROR + "mainFragmentListener " + e.getMessage());
+            Log.d(TAG, AppConstants.ERROR + " mainFragmentListener " + e.getMessage());
         }
 
-        if(mainFragmentListener != null){
-            mainFragmentListener.showAmountOfGlassesLeft(7);
-        }
-
-        // Get shared preferences
+        // Get sharedPreferences
         appData = AppData.getInstance(getActivity());
-
-        resources = getResources();
-        preferences = PreferenceManager.getDefaultSharedPreferences(context);
-
-        sVolumeUnitMl = resources.getString(R.string.preferences_volume_ml);
-        sVolumeUnitOz = resources.getString(R.string.preferences_volume_oz);
+        //Get water volume unit
+        sVolumeUnit = appData.getVolumeUnit();
+        //Get water amount for the day
+        dWaterAmountDay = appData.getWaterDay();
     }
 
     @Override
@@ -124,51 +136,88 @@ public class MainFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate()");
 
-        //Get weight and weight unit
-        getWeightUnit();
-        long weightLong = preferences.getLong(AppConstants.KEY_WEIGHT, 0);
-        weight = Double.longBitsToDouble(weightLong);
-
-        //Get water volume unit
-        getVolumeUnit();
-
         if(appData.isFirstLaunch() && mainFragmentListener != null){
             mainFragmentListener.changeTab(AppConstants.BOT_NAV_POSITION_SETTINGS);
             appData.setFirstLaunch(false);
         }
+
+        if(appData.getUserWeight() == 0 && !appData.isFirstLaunch()){
+            if(mainFragmentListener != null){
+                mainFragmentListener.changeTab(AppConstants.BOT_NAV_POSITION_SETTINGS);
+                mainFragmentListener.showAlarm(R.string.error_settings_empty_weight);
+            }
+        }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume()");
-
-        final double mlWaterKg = 30;
-
-        mWaterAmountDay = weight / dWeightUnit * mlWaterKg / dVolumeUnit;
-
-        setWaterAmountText();
-
-        mWaterAmountLeft = mWaterAmountDay;
+    /*
+    * Refresh the text view that shows the normal amount
+    * of water that user need to drink for day
+    * */
+    private void refreshTextWaterAmount(){
+        String text = String.format("%.0f " + sVolumeUnit, dWaterAmountDay);
+        tvWaterAmount.setText(text);
     }
 
-    private void getVolumeUnit(){
-        final double mlValue = 1;
-        final double ozValue = 29.57353;
-        sVolumeUnit = preferences.getString(AppConstants.KEY_VOLUME, sVolumeUnitMl);
-        dVolumeUnit = sVolumeUnit.equals(sVolumeUnitMl) ? mlValue : ozValue;
+    /*
+    * Refresh the text view that shows left amount
+    * of water that user still need to drink for day
+    * */
+    private void refreshTextWaterAmountLeft(){
 
-        Log.d(TAG, "weight = " + weight);
-        Log.d(TAG, "volume unit  = " + sVolumeUnit);
-        Log.d(TAG, "double volume unit  = " + dVolumeUnit);
+        double value = appData.getWaterDayLeft();
+
+        String title = value < 0 ? "Above the norm on :" : "Left to drink :";
+        tvWaterAmountLeftTitle.setText(title);
+
+        String text = String.format(Locale.getDefault(), "%.0f" + sVolumeUnit, Math.abs(value));
+        tvWaterAmountLeft.setText(text);
+
+        // Also refresh the remaining amount of water in percentage
+        // and number of glasses necessary to drink
+        refreshTextWaterAmountLeftPercentage();
+        refreshTextGlassesLeft();
     }
 
-    private void getWeightUnit(){
-        dWeightUnit = appData.isWeightUnitKg() ? AppConstants.UNIT_VALUE_KG : AppConstants.UNIT_VALUE_LB;
+    /*
+    * Refresh the text view that shows left amount
+    * of water that user still need to drink for day
+    * */
+    private void refreshTextWaterAmountLeftPercentage(){
+
+//      Get the amount of water left to drink in percentage in real time
+        double value = appData.getWaterLeftPercentage();
+
+        final String text = String.format(Locale.getDefault(), "%.1f %%", value);
+        tvWaterAmountLeftPercent.setText(text);
     }
 
-    private void setWaterAmountText(){
-        tvWaterAmount.setText(String.format("%.0f " + sVolumeUnit, mWaterAmountDay));
+    /*
+    * Refresh the amount of water necessary to drink
+    * in glasses represented
+    * */
+    private void refreshTextGlassesLeft(){
+
+//      Count how many glasses left to drink
+        int count = appData.getAmountGlassesLeft();
+        count = count < 0 ? 0 : count;
+
+//      Refresh the text in the text view
+        final String text = String.valueOf(count);
+        tvGlassesLeft.setText(text);
+
+//      Refresh the amount of glasses in the bottom navigation menu
+//        if(mainFragmentListener != null){
+//            mainFragmentListener.showAmountOfGlassesLeft(count);
+//        }
+    }
+
+    private void writeDbDayData(){
+        Log.d(TAG, "Refreshing statistics table .. ");
+        Intent intent = new Intent(getContext(), DBIntentService.class);
+        intent.setAction(AppConstants.ACTION_IS_CURRENT_DAY);
+        intent.putExtra(AppConstants.EXTRAS_DB_AMOUNT, appData.getWaterDay());
+        intent.putExtra(AppConstants.EXTRAS_DB_DRUNK, appData.getWaterDayDrunk());
+        getActivity().startService(intent);
     }
 
 }

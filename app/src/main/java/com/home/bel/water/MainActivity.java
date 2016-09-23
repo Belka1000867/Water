@@ -1,6 +1,8 @@
 package com.home.bel.water;
 
+import android.app.AlertDialog;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -11,13 +13,15 @@ import android.widget.FrameLayout;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
-
 import com.home.bel.water.ui.ForthFragment_;
+import com.home.bel.water.ui.MainFragment;
 import com.home.bel.water.ui.MainFragment_;
 import com.home.bel.water.ui.ReminderFragment_;
 import com.home.bel.water.ui.SettingsFragment_;
 import com.home.bel.water.ui.StatisticsFragment_;
 import com.home.bel.water.utils.AppConstants;
+import com.home.bel.water.utils.AppData;
+import com.home.bel.water.utils.DbAdapter.DbHelper;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -32,9 +36,10 @@ import org.androidannotations.annotations.ViewById;
  *
  */
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity implements AHBottomNavigation.OnTabSelectedListener, MainFragment_.MainFragmentListener {
+public class MainActivity extends AppCompatActivity implements AHBottomNavigation.OnTabSelectedListener, MainFragment.MainFragmentListener {
 
     final static String TAG = "Debug_MainActivity";
+
 
     @ViewById(R.id.framelayout_main)
     FrameLayout mFrameLayout;
@@ -62,12 +67,25 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate()");
+
+        AppData appData = AppData.getInstance(this);
+
+        if(appData.isFirstLaunch()){
+            // Create SQL table
+            DbHelper dbHelper = new DbHelper(this);
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            Log.d(TAG, "Database have been created on the path : " + db.getPath());
+
+        }
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         if(preferences.getBoolean(AppConstants.KEY_NOTIFICATION, true)){
 //            Intent service = new Intent(NotificationService.class);
 //            startService(service);
         }
+
     }
 
 //  Listener for Bottom Navigation Menu
@@ -181,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
 
     @Override
     public void showAmountOfGlassesLeft(int glassesLeft) {
+//        final String title = glassesLeft == 0 ? null : String.valueOf(glassesLeft);
         mBottomNavigation.setNotification(String.valueOf(glassesLeft), AppConstants.BOT_NAV_POSITION_MAIN);
     }
 
@@ -188,6 +207,37 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
     public void changeTab(int position) {
         mBottomNavigation.setCurrentItem(position);
         onTabSelected(position, false);
+    }
+
+    public void showAlarm(int alarmId){
+
+        int messageId;
+
+        AlertDialog.Builder mAlertBuilder = new AlertDialog.Builder(this);
+        mAlertBuilder.setTitle(alarmId);
+        mAlertBuilder.setCancelable(false);
+
+        switch (alarmId){
+            case R.string.error_settings_empty_weight :
+                messageId = R.string.dialog_message_empty_weight;
+
+                mAlertBuilder
+                        .setPositiveButton(R.string.dialog_button_positive, (dialog, which) -> {
+                            dialog.dismiss();
+                        });
+                break;
+            default:
+                Log.d(TAG, AppConstants.ERROR + "No such string for Alert Dialog!");
+                return;
+        }
+
+        String message = getResources().getString(messageId);
+
+        // Set message, create dialog and show it to the user
+        mAlertBuilder
+                .setMessage(message)
+                .create()
+                .show();
     }
 
     /* End of MainFragment_.MainFragmentListener functions */

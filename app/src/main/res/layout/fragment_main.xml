@@ -3,18 +3,95 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_main_waterAmount"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Fragment Main"
-        android:gravity="center" />
+        android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/tv_main_waterAmountLeftPercent"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_main_waterAmount_title"
+        android:layout_width="1dp"
         android:layout_height="wrap_content"
-        />
+        android:text="Today need to drink:"
+        android:gravity="center"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/tv_main_waterAmount"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:text="Fragment Main"
+        android:gravity="center"
+        android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_main_waterAmountLeft_title"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:text="Left to drink:"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tv_main_waterAmountLeft"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:text="Fragment Main"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_main_waterAmountLeftPercent_title"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:text="Left to drink in percentage:"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tv_main_waterAmountLeftPercent"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:text="Fragment Main"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_main_glassLeft_title"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:text="Glasses left to drink:"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/tv_main_glassesLeft"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:text="Fragment Main"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+
 
     <Button
         android:id="@+id/b_main_drink"
@@ -23,6 +100,14 @@
         android:layout_gravity="center"
         android:background="@drawable/btn_drink_selector"
         />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Refresh"
+        android:id="@+id/btnRefresh"
+        android:layout_gravity="center_horizontal"
+        android:onClick="refreshData()" />
 
 
 </LinearLayout>

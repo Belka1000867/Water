@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.preference.DialogPreference;
@@ -117,11 +116,11 @@ public class WeightDialogPreference extends DialogPreference implements View.OnC
 
         if(v.equals(bKg)){
             focusedButton = bKg;
-            value = getWeight()/AppConstants.UNIT_VALUE_LB;
+            value = getWeight()/AppConstants.VALUE_WEIGHT_LB;
         }
         else {
             focusedButton = bLb;
-            value = getWeight()*AppConstants.UNIT_VALUE_LB;
+            value = getWeight()*AppConstants.VALUE_WEIGHT_LB;
         }
 
         focusButton(focusedButton);
@@ -182,7 +181,7 @@ public class WeightDialogPreference extends DialogPreference implements View.OnC
             super.onBindDialogView(view);
 
             appData = AppData.getInstance(getContext());
-            unit = appData.isWeightUnitKg() ? AppConstants.UNIT_VALUE_KG : AppConstants.UNIT_VALUE_LB;
+            unit = appData.getWeightValue();
 
             mListView = (ListView) view.findViewById(R.id.listview_weight);
 

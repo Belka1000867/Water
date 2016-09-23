@@ -35,9 +35,9 @@ public class NotificationWakefulReceiver extends WakefulBroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Intent intentService = new Intent(context, NotificationIntentService.class);
-        /*
-        * Insert data inside of the Intent
-        * */
+
+        // Insert data inside the Intent
+
         startWakefulService(context, intentService);
     }
 

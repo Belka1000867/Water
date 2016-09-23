@@ -34,9 +34,8 @@ public class UnitTwoBtnPreference extends TwoBtnPreference {
 
     @Override
     void init(Context context) {
-        Resources resources = context.getResources();
-        setValueFirst(resources.getString(R.string.preferences_volume_ml));
-        setValueSecond(resources.getString(R.string.preferences_volume_oz));
+        setValueFirst(AppConstants.VOLUME_ML);
+        setValueSecond(AppConstants.VOLUME_OZ);
 
         setBtnFirstId(R.id.b_pref_ml);
         setBtnSecondId(R.id.b_pref_oz);
