@@ -1,4 +1,4 @@
-package com.home.bel.water.utils;
+package com.home.bel.water.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,7 +12,11 @@ import android.util.Log;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
+
+import static android.provider.BaseColumns._ID;
+import static com.home.bel.water.database.DbAdapter.StatisticsTable.COLUMN_AMOUNT;
+import static com.home.bel.water.database.DbAdapter.StatisticsTable.COLUMN_DATE;
+import static com.home.bel.water.database.DbAdapter.StatisticsTable.COLUMN_DRUNK;
 
 /**
  * Class for work with the SQL database
@@ -23,7 +27,7 @@ public final class DbAdapter {
     private DbHelper dbHelper;
     private SQLiteDatabase db;
 
-    private static final String TAG = "Debug_WaterDB";
+    private static final String TAG = "Debug_DbAdapter";
 
     /* Prevent initialization from accidentally instantiating the WaterDb class */
     public DbAdapter(Context ctx){
@@ -37,10 +41,10 @@ public final class DbAdapter {
     * Implements BaseColumn class in order to have the field of primary key _ID
     * */
     static abstract class StatisticsTable implements BaseColumns {
-        static final String TABLE_NAME = "statistics";
-        static final String COLUMN_DATE = "date";
-        static final String COLUMN_AMOUNT = "amount";
-        static final String COLUMN_DRUNK = "drunk";
+        public static final String TABLE_NAME = "statistics";
+        public static final String COLUMN_DATE = "date";
+        public static final String COLUMN_AMOUNT = "amount";
+        public static final String COLUMN_DRUNK = "drunk";
 
         static String[] getColumns(){
             return new String[]{
@@ -66,10 +70,10 @@ public final class DbAdapter {
         /* SQL queries to execute */
         private static final String SQL_CREATE_DB =
                 "CREATE TABLE " + StatisticsTable.TABLE_NAME + " (" +
-                        StatisticsTable._ID + TYPE_INTEGER + " PRIMARY KEY AUTOINCREMENT " + COMMA_SEP +
-                        StatisticsTable.COLUMN_DATE + TYPE_INTEGER + COMMA_SEP +
-                        StatisticsTable.COLUMN_AMOUNT + TYPE_REAL + COMMA_SEP +
-                        StatisticsTable.COLUMN_DRUNK + TYPE_REAL +
+                        _ID + TYPE_INTEGER + " PRIMARY KEY AUTOINCREMENT " + COMMA_SEP +
+                        COLUMN_DATE + TYPE_INTEGER + COMMA_SEP +
+                        COLUMN_AMOUNT + TYPE_REAL + COMMA_SEP +
+                        COLUMN_DRUNK + TYPE_REAL +
                         " )";
 
         private static final String SQL_DELETE_DB =
@@ -134,27 +138,34 @@ public final class DbAdapter {
         Log.d(TAG, "Date in the new format : " + dateString);
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(StatisticsTable.COLUMN_DATE, dateString);
-        contentValues.put(StatisticsTable.COLUMN_AMOUNT, amount);
-        contentValues.put(StatisticsTable.COLUMN_DRUNK, drunk);
+        contentValues.put(COLUMN_DATE, dateString);
+        contentValues.put(COLUMN_AMOUNT, amount);
+        contentValues.put(COLUMN_DRUNK, drunk);
 
         return db.insert(StatisticsTable.TABLE_NAME, null, contentValues);
     }
 
     /* Update row in the table */
+
+//    !!!!!!!
+//    check update function as it does not update now
     public boolean updateRow(Date date, double amount, double drunk){
 
-        Log.d(TAG, "Update row with the new information.");
+        Log.d(TAG, "Updating row with new information.");
 
         String dateString = formatDate(date);
 
+//        Log.d(TAG, "Date in the new format : " + dateString);
+
         ContentValues contentValues = new ContentValues();
-        contentValues.put(StatisticsTable.COLUMN_AMOUNT, amount);
-        contentValues.put(StatisticsTable.COLUMN_DRUNK, drunk);
+        contentValues.put(COLUMN_AMOUNT, amount);
+        contentValues.put(COLUMN_DRUNK, drunk);
 
-        String where = StatisticsTable.COLUMN_DATE + "=" + dateString;
+        String where = COLUMN_DATE + " = ?";
 
-        return db.update(StatisticsTable.TABLE_NAME, contentValues, where, null) > 0;
+        String[] whereArgs = {dateString};
+
+        return db.update(StatisticsTable.TABLE_NAME, contentValues, where, whereArgs) > 0;
     }
 
     public boolean isCurrentDay(){
@@ -182,7 +193,7 @@ public final class DbAdapter {
 //        String orderBy = StatisticsTable.COLUMN_DATE;
         String orderBy = null;
         String limit = String.valueOf(oneDay);
-        String selection = StatisticsTable.COLUMN_DATE + " LIKE " + "%" + curYear + curWeekOfYear + curDayOfWeek +"%";
+        String selection = COLUMN_DATE + " LIKE " + "%" + curYear + curWeekOfYear + curDayOfWeek +"%";
 
         return db.query(true, table, StatisticsTable.getColumns(), selection, null, null, null, orderBy, limit);
     }
@@ -193,7 +204,7 @@ public final class DbAdapter {
         Log.d(TAG, "Getting rows for a week from the database..");
 
         String tableSelection = "(SELECT * FROM statistics ORDER BY _id DESC LIMIT 7)";
-        String orderBy = StatisticsTable.COLUMN_DATE + " ASC";
+        String orderBy = COLUMN_DATE + " ASC";
         String limit = "7";
 
        return db.query(true, tableSelection, StatisticsTable.getColumns(), null, null, null, null, orderBy, limit);

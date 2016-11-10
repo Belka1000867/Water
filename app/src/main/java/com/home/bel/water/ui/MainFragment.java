@@ -1,17 +1,14 @@
 package com.home.bel.water.ui;
 
-import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.home.bel.water.R;
-import com.home.bel.water.services.DBIntentService;
+import com.home.bel.water.database.DbIntentService;
 import com.home.bel.water.utils.AppConstants;
 import com.home.bel.water.utils.AppData;
 
@@ -82,6 +79,7 @@ public class MainFragment extends Fragment {
         appData.setWaterDayLeft(dWaterLeft);
 
         double dWaterDrunk = appData.getWaterDay() - dWaterLeft;
+        Log.d(TAG, "clickDrink: " + dWaterDrunk);
         appData.setWaterDayDrunk(dWaterDrunk);
 
         double leftDayPercent = appData.getWaterLeftPercentage();
@@ -147,6 +145,7 @@ public class MainFragment extends Fragment {
                 mainFragmentListener.showAlarm(R.string.error_settings_empty_weight);
             }
         }
+
     }
 
     /*
@@ -213,7 +212,7 @@ public class MainFragment extends Fragment {
 
     private void writeDbDayData(){
         Log.d(TAG, "Refreshing statistics table .. ");
-        Intent intent = new Intent(getContext(), DBIntentService.class);
+        Intent intent = new Intent(getContext(), DbIntentService.class);
         intent.setAction(AppConstants.ACTION_IS_CURRENT_DAY);
         intent.putExtra(AppConstants.EXTRAS_DB_AMOUNT, appData.getWaterDay());
         intent.putExtra(AppConstants.EXTRAS_DB_DRUNK, appData.getWaterDayDrunk());

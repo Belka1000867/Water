@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <TextView
+        android:id="@+id/tv_title_bedtime"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="@string/preferences_title_bedtime"
+        style="@style/Water.Preference.Title"
+        />
+
+    <TextView
+        android:id="@+id/tv_value_bedtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/tv_clock_bedtime"
+        android:layout_toStartOf="@+id/tv_clock_bedtime"
+        android:layout_toRightOf="@+id/tv_title_bedtime"
+        android:layout_toEndOf="@+id/tv_title_bedtime"
+        style="@style/Water.Preference.Value"
+        android:text="0:00"
+        />
+
+    <TextView
+        android:id="@+id/tv_clock_bedtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Water.Preference.RightButton"
+        />
+
+    <View android:id="@+id/strut"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
+</RelativeLayout>

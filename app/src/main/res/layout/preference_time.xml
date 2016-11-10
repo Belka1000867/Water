@@ -1,0 +1,333 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/back">
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cancel_done_btn"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="40dp"
+        android:textSize="17dp"
+        android:paddingTop="10dp"
+        android:textStyle="bold"
+        android:paddingBottom="10dp"
+        android:paddingLeft="28dp"
+        android:paddingRight="28dp"
+        android:text="@string/cancel"
+        android:id="@+id/btn_cancel_signin"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cancel_done_btn"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="40dp"
+        android:textSize="17dp"
+        android:text="@string/done"
+        android:paddingTop="10dp"
+        android:textStyle="bold"
+        android:paddingBottom="10dp"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/btn_done_signin"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:layout_marginLeft="40dp"
+        android:orientation="vertical"
+        android:layout_below="@+id/btn_cancel_signin">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="times new roman"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Tuesday,May"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:id="@+id/tv_day_month" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="times new roman"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=" 7,2016"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:id="@+id/tv_date" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="130dp"
+        android:layout_below="@+id/btn_cancel_signin">
+        <ImageView
+            android:id="@+id/iv_signin_logo"
+            android:layout_width="200dp"
+            android:layout_height="180dp"
+            android:src="@drawable/sign_in_logo"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/scroller_sign_in"
+        android:layout_below="@+id/btn_done_signin"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+        <LinearLayout
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="30dp">
+
+                <TextView
+
+                    android:layout_height="wrap_content"
+                    android:text="First Name"
+                    style="@style/sign_in_text"
+                    android:id="@+id/label_firstname"
+                    android:layout_alignParentLeft="true"
+                    android:paddingTop="10dp"
+                    android:inputType="textCapWords"
+                    />
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_firstname"
+                    android:hint="Required"
+                    android:ems="10"
+                    android:textSize="20dp"
+                    android:padding="10dp"
+                    android:layout_width="160dp"
+                    android:background="@drawable/et_border"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                >
+
+                <TextView
+
+                    android:layout_height="wrap_content"
+                    android:text="Last Name"
+                    android:layout_width="wrap_content"
+                    android:paddingRight="10dp"
+                    android:gravity="left"
+                    android:id="@+id/label_lastname"
+                    android:paddingTop="10dp"
+                    android:layout_alignParentLeft="true"
+                    android:inputType="textCapWords"
+                    />
+                <AutoCompleteTextView
+                    android:id="@+id/et_lastname"
+                    android:hint="Required"
+                    android:ems="10"
+                    android:textSize="20dp"
+                    android:textAllCaps="true"
+                    android:padding="10dp"
+                    android:layout_width="160dp"
+                    android:background="@drawable/et_border"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:id="@+id/ll_company"
+                >
+                <TextView
+
+                    android:layout_height="wrap_content"
+                    android:text="Company"
+                    android:layout_width="wrap_content"
+                    android:paddingRight="10dp"
+                    android:gravity="left"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/label_company"
+                    android:layout_alignParentLeft="true"
+                    />
+
+
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_company"
+                    android:ems="10"
+                    android:textSize="20dp"
+                    android:padding="10dp"
+                    android:textAllCaps="true"
+                    android:layout_width="160dp"
+                    android:background="@drawable/et_border"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+                <!--android:background="@drawable/contact_edittext_bg"-->
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:id="@+id/ll_address"
+                >
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:text="Address"
+                    android:layout_width="wrap_content"
+                    android:paddingRight="10dp"
+                    android:gravity="left"
+                    android:id="@+id/label_address"
+                    android:paddingTop="15dp"
+                    />
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_address"
+                    android:ems="10"
+                    android:textSize="20dp"
+                    android:padding="10dp"
+                    android:layout_width="160dp"
+                    android:background="@drawable/et_border"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:id="@+id/ll_city"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:paddingRight="10dp"
+                    android:gravity="left"
+                    android:layout_height="wrap_content"
+                    android:text="City"
+                    android:id="@+id/label_city"
+                    android:paddingTop="15dp"
+                    />
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_city"
+                    android:ems="10"
+                    android:textSize="20dp"
+                    android:padding="10dp"
+                    android:layout_width="160dp"
+                    android:background="@drawable/et_border"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:id="@+id/ll_state"
+                >
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_state"
+
+                    android:ems="10"
+                    android:textSize="20dp"
+                    android:padding="10dp"
+                    android:layout_width="160dp"
+                    android:background="@drawable/et_border"
+                    android:layout_alignParentRight="true"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:text="State"
+                    style="@style/sign_in_text"
+                    android:id="@+id/label_state"
+                    android:paddingTop="15dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:id="@+id/ll_zip_code"
+                >
+
+                <TextView
+
+                    android:layout_height="wrap_content"
+                    android:text="Zip Code"
+                    android:layout_width="wrap_content"
+                    android:paddingRight="10dp"
+                    android:gravity="left"
+                    android:id="@+id/label_zip_code"
+                    android:paddingTop="15dp"
+                    />
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_zipcode"
+                    android:ems="10"
+                    android:layout_width="160dp"
+                    android:background="@drawable/et_border"
+                    android:textSize="20dp"
+                    android:padding="10dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

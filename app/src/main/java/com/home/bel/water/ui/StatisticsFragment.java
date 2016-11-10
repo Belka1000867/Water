@@ -5,18 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.annotation.WorkerThread;
 import android.support.v4.app.Fragment;
 import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.home.bel.water.R;
-import com.home.bel.water.services.DBIntentService;
+import com.home.bel.water.database.DbIntentService;
 import com.home.bel.water.utils.AppConstants;
 
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 /**
@@ -81,7 +79,7 @@ public class StatisticsFragment extends Fragment {
 
     private void refreshStatistics(){
         Log.d(TAG, "Refreshing statistics table .. ");
-        Intent intent = new Intent(getContext(), DBIntentService.class);
+        Intent intent = new Intent(getContext(), DbIntentService.class);
         intent.setAction(AppConstants.ACTION_GET_WEEK_DATA);
         intent.putExtra(AppConstants.EXTRAS_INTENT_RESULT, dbResultReceiver);
         getActivity().startService(intent);
@@ -97,12 +95,12 @@ public class StatisticsFragment extends Fragment {
         Log.d(TAG, "amount of rows: " + rowCount);
 
         for(int i = 0; i < rowCount; i++){
-            text += tvExampleText.getText() +
-                    "Date : " + data.getString(AppConstants.EXTRAS_DB_DATE + i) +
+            text += "Date : " + data.getString(AppConstants.EXTRAS_DB_DATE + i) +
                     "Amount : " + data.getLong(AppConstants.EXTRAS_DB_AMOUNT + i) +
                     "Drunk : " + data.getDouble(AppConstants.EXTRAS_DB_DRUNK + i) + "\n";
 
         }
+
         tvExampleText.setText(text);
     }
 

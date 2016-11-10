@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
 
     <PreferenceCategory
         android:title="@string/preferences_category_first"
         android:selectable="true">
 
-        <!--<CheckBoxPreference-->
-            <!--android:title="CheckBoxPreference"-->
-            <!--android:defaultValue="false"-->
-            <!--android:summary="This preference can be true or false"-->
-            <!--android:key="checkboxPref"-->
-            <!--/>-->
-
-        <!--<EditTextPreference-->
-            <!--android:title="EditTextPreference">-->
-        <!--</EditTextPreference>-->
 
         <ListPreference
             android:title="Food Ration"
@@ -30,31 +20,54 @@
             android:defaultValue="@string/preferences_volume_ml"
             />
 
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Your Schedule"
+        android:key="key_screen_schedule"
+        android:summary="Settings for schedule"
+        >
+
+        <com.home.bel.water.utils.TimePreferences.TimeTwoBtnPreference
+            android:key="key_time"
+            />
+
+        <com.home.bel.water.utils.TimePreferences.WakeTimeCustomDialogPreference
+            android:key="key_wake"
+            />
+
+        <com.home.bel.water.utils.TimePreferences.BedTimeCustomDialogPreference
+            android:key="key_bedtime"/>
+
     </PreferenceCategory>
 
 
+
+
     <PreferenceCategory
-        android:title="@string/preferences_category_second">
+        android:title="@string/preferences_category_second"
+        android:summary="User data">
 
-        <com.home.bel.water.utils.WeightDialogPreference
-            android:key="key_weight"
-            />
+            <com.home.bel.water.utils.WeightDialogPreference
+                android:key="key_weight"
+                />
 
-        <!--<com.home.bel.water.utils.GenderPreference-->
-            <!--android:key="@string/preferences.key.gender"-->
-            <!--/>-->
+            <!--<com.home.bel.water.utils.GenderPreference-->
+                <!--android:key="@string/preferences.key.gender"-->
+                <!--/>-->
 
-        <!--<com.home.bel.water.utils.GenderPreferenceB-->
-            <!--android:key="@string/preferences.key.gender_v2"-->
-            <!--/>-->
+            <!--<com.home.bel.water.utils.GenderPreferenceB-->
+                <!--android:key="@string/preferences.key.gender_v2"-->
+                <!--/>-->
 
-        <!--<com.home.bel.water.utils.GenderPreferenceD-->
-            <!--android:key="@string/preferences.key.gender_v3"-->
-            <!--/>-->
+            <!--<com.home.bel.water.utils.GenderPreferenceD-->
+                <!--android:key="@string/preferences.key.gender_v3"-->
+                <!--/>-->
 
-        <com.home.bel.water.utils.GenderTwoBtnPreference
-            android:key="@string/preferences_key_gender_v4"
-            />
+            <com.home.bel.water.utils.GenderTwoBtnPreference
+                android:key="@string/preferences_key_gender_v4"
+                />
 
     </PreferenceCategory>
 
@@ -70,19 +83,14 @@
             android:defaultValue="true"
             />
 
-        <PreferenceScreen
-            android:title="Notification Settings"
-            android:key="key_notifications_extra"
-            >
-
-            <ListPreference
-                android:title="Food Ration"
-                android:summary="What you mostly eat during the day?"
-                android:entries="@array/preferences_array_foodRation"
-                android:entryValues="@array/preferences_array_foodRationValues"
-                />
-
-        </PreferenceScreen>
-
     </PreferenceCategory>
+
+
+    <!-- !!! Do not take away !!!
+
+    This preference will take place that is cut off by Bottom Navigation Menu
+
+    -->
+    <Preference/>
+
 </PreferenceScreen>

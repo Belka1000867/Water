@@ -16,42 +16,28 @@ import com.home.bel.water.R;
  */
 public class UnitTwoBtnPreference extends TwoBtnPreference {
 
-    public UnitTwoBtnPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    public UnitTwoBtnPreference(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
     public UnitTwoBtnPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public UnitTwoBtnPreference(Context context) {
-        super(context);
-    }
-
     @Override
-    void init(Context context) {
-        setValueFirst(AppConstants.VOLUME_ML);
-        setValueSecond(AppConstants.VOLUME_OZ);
+    public void init(Context context) {
 
-        setBtnFirstId(R.id.b_pref_ml);
-        setBtnSecondId(R.id.b_pref_oz);
+        setButtonIds(R.id.b_pref_ml, R.id.b_pref_oz);
+        setValues(AppConstants.VOLUME_ML, AppConstants.VOLUME_OZ);
 
         setLayoutResource(R.layout.preference_volume);
     }
 
     @Override
-    void setPersistValue(Object value) {
+    public void setPersistValue(Object value) {
         if(shouldPersist()){
             persistString((String)value);
         }
     }
 
     @Override
-    Object getPersistValue() {
+    public Object getPersistValue() {
         String defaultValue = (String) getValueFirst();
         return getPersistedString(defaultValue);
     }

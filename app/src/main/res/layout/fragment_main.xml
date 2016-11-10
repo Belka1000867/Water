@@ -107,7 +107,8 @@
         android:text="Refresh"
         android:id="@+id/btnRefresh"
         android:layout_gravity="center_horizontal"
-        android:onClick="refreshData()" />
+        android:onClick="refreshData()"
+        />
 
 
 </LinearLayout>

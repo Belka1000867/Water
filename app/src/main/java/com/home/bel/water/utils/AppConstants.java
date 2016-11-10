@@ -1,7 +1,5 @@
 package com.home.bel.water.utils;
 
-import android.provider.BaseColumns;
-
 /**
  * Created by bel on 04.06.16.
  */
@@ -28,32 +26,42 @@ public final class AppConstants {
     public static final String KEY_GENDER = "key.gender";
     public static final String KEY_GENDER_V3 = "key_gender_v3";
     public static final String KEY_VOLUME = "key_volume";
+    public static final String KEY_TIME_CLOCK = "key_time";
+    public static final String KEY_BEDTIME = "key_bedtime";
+    public static final String KEY_WAKE = "key_wake";
     public static final String KEY_NOTIFICATION = "key_notification";
     public static final String KEY_NOTIFICATION_EXTRA = "key_notification_extra";
 
     /* Unit Weight Value */
-    public static final double VALUE_WEIGHT_KG = 1;
-    public static final double VALUE_WEIGHT_LB = 2.204;
+    static final double VALUE_WEIGHT_KG = 1;
+    static final double VALUE_WEIGHT_LB = 2.204;
 
     /* Unit Volume Value */
-    public static final double VALUE_VOLUME_ML = 1;
-    public static final double VALUE_VOLUME_OZ = 29.57353;
+    static final double VALUE_VOLUME_ML = 1;
+    static final double VALUE_VOLUME_OZ = 29.57353;
 
-    /* Preference persist values */
-    public static final String VOLUME_ML = "Ml";
-    public static final String VOLUME_OZ = "Oz";
 
-    public static final String MALE = "Male";
-    public static final String FEMALE = "Female";
+    /* Preference persist  */
+    static final String VOLUME_ML = "Ml";
+    static final String VOLUME_OZ = "Oz";
+    static final String MALE = "Male";
+    static final String FEMALE = "Female";
+    public static final String TIME_12 = "12";
+    public static final String TIME_24 = "24";
+    public static final String TIME_AM = "AM";
+    public static final String TIME_PM = "PM";
 
     /* Preference variables */
-    public static final int LIST_WEIGHT_OFFSET_KG = 20;
-    public static final int NECESSARY_ML_PER_KG = 30;
+    static final int LIST_WEIGHT_OFFSET_KG = 20;
+    static final int NECESSARY_ML_PER_KG = 30;
 
     public static final int PERCENTAGE_FULL = 100;
-    public static final int PERCENTAGE_EMPTY = 0;
+    static final int PERCENTAGE_EMPTY = 0;
 
     public static final int GLASS_VOLUME = 200;
+
+    public static final String PREFERENCE_FRAGMENT_DIALOG_TAG =
+            "preference_fragment_dialog_tag";
 
     /* To work with the database */
 

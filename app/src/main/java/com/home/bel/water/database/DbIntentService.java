@@ -1,4 +1,4 @@
-package com.home.bel.water.services;
+package com.home.bel.water.database;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -8,14 +8,13 @@ import android.support.v4.os.ResultReceiver;
 import android.util.Log;
 
 import com.home.bel.water.utils.AppConstants;
-import com.home.bel.water.utils.DbAdapter;
 
 import java.util.Date;
 
 /**
  *  Service to work with the database.
  */
-public class DBIntentService extends IntentService {
+public class DbIntentService extends IntentService {
 
     private Intent mIntent;
     private DbAdapter db;
@@ -24,8 +23,8 @@ public class DBIntentService extends IntentService {
 
     private static final String TAG = "Debug_DBIntentService";
 
-    public DBIntentService() {
-        super(DBIntentService.class.getSimpleName());
+    public DbIntentService() {
+        super(DbIntentService.class.getSimpleName());
         Log.d(TAG, "Start thread : " + Thread.currentThread().getName());
         db = new DbAdapter(this);
     }
@@ -61,10 +60,6 @@ public class DBIntentService extends IntentService {
 
     private int proceedRequest(String action){
         switch (action){
-//            case AppConstants.ACTION_INSERT_DATA :
-//                return insertDayData();
-//            case AppConstants.ACTION_UPDATE_DATA :
-//                return updateDayData();
             case AppConstants.ACTION_IS_CURRENT_DAY:
                 return isCurrentDay();
             case AppConstants.ACTION_GET_DAY_DATA :
@@ -95,11 +90,13 @@ public class DBIntentService extends IntentService {
         double amount = dayData.getDouble(AppConstants.EXTRAS_DB_AMOUNT);
         double drunk = dayData.getDouble(AppConstants.EXTRAS_DB_DRUNK);
 
-        db.updateRow(new Date(), amount, drunk);
+        if(db.updateRow(new Date(), amount, drunk))
+            Log.d(TAG, "updated row " + drunk);
 
         return AppConstants.RESULT_UPDATE_CURRENT_DAY;
     }
 
+    /* Check if this day is in the database and than need to update a current raw or insert a new row */
     private int isCurrentDay(){
         Log.d(TAG, "Checking if this day already in the database..");
 
@@ -109,6 +106,7 @@ public class DBIntentService extends IntentService {
             return insertDayData();
     }
 
+    /* Get the data for the current day */
     private int getCurrentDayData(){
         Log.d(TAG, "Getting data for the day..");
 
@@ -125,6 +123,7 @@ public class DBIntentService extends IntentService {
         return AppConstants.RESULT_CURRENT_DAY;
     }
 
+    /* Get the data for the current week */
     private int getCurrentWeekData(){
         Log.d(TAG, "Getting data for the week..");
 

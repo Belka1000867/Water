@@ -18,6 +18,8 @@ public class AppData {
     private final SharedPreferences appLocalData;
     private final SharedPreferences appSettings;
 
+    private String defaultTimeValue = "00:00";
+
     private AppData(Context context){
         appLocalData = context.getSharedPreferences(APP_DATA_NAME, Context.MODE_PRIVATE);
         appSettings = PreferenceManager.getDefaultSharedPreferences(context);
@@ -64,17 +66,17 @@ public class AppData {
         return Double.longBitsToDouble(appSettings.getLong(AppConstants.KEY_WEIGHT, 0));
     }
 
-    public boolean isVolumeUnitMl(){
-        String sVolumeUnit = appSettings.getString(AppConstants.KEY_VOLUME, AppConstants.VOLUME_ML);
-        return sVolumeUnit.equals(AppConstants.VOLUME_ML);
-    }
-
     public double getVolumeValue(){
         return isVolumeUnitMl() ? AppConstants.VALUE_VOLUME_ML : AppConstants.VALUE_VOLUME_OZ;
     }
 
     public String getVolumeUnit(){
         return isVolumeUnitMl() ? AppConstants.VOLUME_ML : AppConstants.VOLUME_OZ;
+    }
+
+    private boolean isVolumeUnitMl(){
+        String sVolumeUnit = appSettings.getString(AppConstants.KEY_VOLUME, AppConstants.VOLUME_ML);
+        return sVolumeUnit.equals(AppConstants.VOLUME_ML);
     }
 
     /*
@@ -156,4 +158,18 @@ public class AppData {
         long waterDayDrunk = appLocalData.getLong("water_day_drunk", 0);
         return Double.longBitsToDouble(waterDayDrunk);
     }
+
+    public boolean isTime24Hour(){
+        String time = appSettings.getString(AppConstants.KEY_TIME_CLOCK, AppConstants.TIME_24);
+        return time.equals(AppConstants.TIME_24);
+    }
+
+    public String getBedtimeString(){
+        return appSettings.getString(AppConstants.KEY_BEDTIME, defaultTimeValue);
+    }
+
+    public String getWakeString(){
+        return appSettings.getString(AppConstants.KEY_WAKE, defaultTimeValue);
+    }
+
 }

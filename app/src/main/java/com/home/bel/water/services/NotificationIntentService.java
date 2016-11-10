@@ -48,7 +48,7 @@ public class NotificationIntentService extends IntentService {
         /*
         * When finished release the wake lock from WakefulBroadcastReceiver
         * */
-        NotificationWakefulReceiver.completeWakefulIntent(intent);
+        NotificationWakefulBroadcastReceiver.completeWakefulIntent(intent);
     }
 
     private void notifyUser(){

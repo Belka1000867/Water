@@ -14,7 +14,7 @@ import com.home.bel.water.R;
  * Interface of custom preference with two possible values
  * with one button for each.
  */
-public abstract class TwoBtnPreference extends Preference implements View.OnClickListener {
+public abstract class TwoBtnPreference extends Preference implements View.OnClickListener, CustomPreferenceInterface {
 
     private Button btnFirst;
     private Button btnSecond;
@@ -25,31 +25,26 @@ public abstract class TwoBtnPreference extends Preference implements View.OnClic
     private Object valueFirst;
     private Object valueSecond;
 
-    public TwoBtnPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init(context);
-    }
-
-    public TwoBtnPreference(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init(context);
-    }
+    public abstract void init(Context context);
 
     public TwoBtnPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public TwoBtnPreference(Context context) {
-        super(context);
-        init(context);
+    /* Abstract methods */
+
+    public void setButtonIds(int btnFirstId, int btnSecondId){
+        this.btnFirstId = btnFirstId;
+        this.btnSecondId = btnSecondId;
     }
 
-    abstract void init(Context context);
+    public void setValues(Object valueFirst, Object valueSecond){
+        this.valueFirst = valueFirst;
+        this.valueSecond = valueSecond;
+    }
 
-    abstract void setPersistValue(Object value);
-
-    abstract Object getPersistValue();
+    /* */
 
     @Override
     public void onBindViewHolder(PreferenceViewHolder holder) {
@@ -58,9 +53,8 @@ public abstract class TwoBtnPreference extends Preference implements View.OnClic
         // Disable click from the Preference View
         holder.itemView.setClickable(false);
 
-        btnFirst = (Button) holder.findViewById(getBtnFirstId());
-        btnSecond = (Button) holder.findViewById(getBtnSecondId());
-
+        btnFirst = (Button) holder.findViewById(btnFirstId);
+        btnSecond = (Button) holder.findViewById(btnSecondId);
         btnFirst.setOnClickListener(this);
         btnSecond.setOnClickListener(this);
 
@@ -84,48 +78,14 @@ public abstract class TwoBtnPreference extends Preference implements View.OnClic
 
     @Override
     public void onClick(View v) {
-
-        if(v.equals(btnFirst)){
-            focusButton(btnFirst);
-            setPersistValue(valueFirst);
-        }
-        else{
-            focusButton(btnSecond);
-            setPersistValue(valueSecond);
-        }
-
+        Button btnFocused = v.equals(btnFirst) ? btnFirst : btnSecond;
+        Object value = v.equals(btnFirst) ? valueFirst : valueSecond;
+        focusButton(btnFocused);
+        setPersistValue(value);
     }
 
-    void setBtnFirstId(int id){
-        btnFirstId = id;
-    }
-
-    void setBtnSecondId(int id){
-        btnSecondId = id;
-    }
-
-    int getBtnFirstId(){
-        return btnFirstId;
-    }
-
-    int getBtnSecondId(){
-        return btnSecondId;
-    }
-
-    void setValueFirst(Object value){
-        valueFirst = value;
-    }
-
-    void setValueSecond(Object value){
-        valueSecond = value;
-    }
-
-    Object getValueFirst(){
+    protected Object getValueFirst(){
         return valueFirst;
-    }
-
-    Object getValueSecond(){
-        return valueSecond;
     }
 
 }

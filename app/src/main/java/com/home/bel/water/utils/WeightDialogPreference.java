@@ -25,13 +25,7 @@ import com.home.bel.water.R;
 /**
  * Preference to enter the weight for the user.
  */
-public class WeightDialogPreference extends DialogPreference implements View.OnClickListener {
-
-    private static final String DIALOG_FRAGMENT_TAG =
-            "android.support.v7.preference.PreferenceFragment.DIALOG";
-
-    private AppData appData;
-    private SharedPreferences sharedPreferences;
+public class  WeightDialogPreference extends CustomDialogPreference implements View.OnClickListener, CustomPreferenceInterface{
 
     private TextView tvWeightValue;
     private Button bKg;
@@ -39,53 +33,23 @@ public class WeightDialogPreference extends DialogPreference implements View.OnC
 
     private final static String TAG = "Debug_WeightPreference";
 
-    public WeightDialogPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        Log.d(TAG, "WeightPreference(context, attrs, defStyleAttr, defStyleRes)");
-        init(context);
+    @Override
+    public void init(Context context) {
+        Resources resources = context.getResources();
+        String dialogTitle = resources.getString(R.string.preferences_title_weight);
+
+        setPreferenceLayout(R.layout.preference_weight)
+                .setDialogResources(dialogTitle, R.mipmap.ic_water, R.layout.preference_weight_dialog);
     }
 
-    public WeightDialogPreference(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        Log.d(TAG, "WeightPreference(context, attrs, defStyleAttr)");
-        init(context);
-    }
+//    @Override
+//    public void whenButtonIsFocused(Button button) {
+//        getAppData().setWeightUnitKg(isMainButton(button));
+//    }
 
     public WeightDialogPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        Log.d(TAG, "WeightPreference(context, attrs)");
-        init(context);
-    }
 
-    public WeightDialogPreference(Context context) {
-        super(context);
-        Log.d(TAG, "WeightPreference(context)");
-        init(context);
-    }
-
-    private void init(Context context){
-        appData = AppData.getInstance(context);
-
-//      Set required UI for dialog
-        Resources resources = context.getResources();
-        String title = resources.getString(R.string.preferences_title_weight); // + "  [ " + unit + " ]" ;
-
-        setLayoutResource(R.layout.preference_weight);
-
-        setDialogTitle(title);
-        setDialogIcon(R.mipmap.ic_water);
-        setDialogLayoutResource(R.layout.preference_weight_dialog);
-    }
-
-    public static void onDisplayPreferenceDialog(PreferenceFragmentCompat preferenceFragment, Preference preference){
-        Log.d(TAG, "onDisplayPreferenceDialog(preferenceFragment, preference)");
-        FragmentManager fragmentManager = preferenceFragment.getFragmentManager();
-        if(fragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) == null) {
-            WeightPreferenceDialogFragment weightFragment =
-                    WeightPreferenceDialogFragment.newInstance(preference.getKey());
-            weightFragment.setTargetFragment(preferenceFragment, 0);
-            weightFragment.show(fragmentManager, DIALOG_FRAGMENT_TAG);
-        }
     }
 
     @Override
@@ -95,36 +59,26 @@ public class WeightDialogPreference extends DialogPreference implements View.OnC
         tvWeightValue = (TextView) holder.findViewById(R.id.tv_weight_value);
         bKg = (Button) holder.findViewById(R.id.b_weight_kg);
         bLb = (Button) holder.findViewById(R.id.b_weight_lb);
-
         bKg.setOnClickListener(this);
         bLb.setOnClickListener(this);
 
-        sharedPreferences = getPreferenceManager().getSharedPreferences();
         //set text with the value from the shared preferences of the settings
-        setText(getWeight());
+        setValueText(getAppData().getUserWeight());
 
         //Define which button should be focused
-        boolean isUnitKg = appData.isWeightUnitKg();
+        boolean isUnitKg = getAppData().isWeightUnitKg();
         Button focusedButton = isUnitKg ? bKg : bLb;
         focusButton(focusedButton);
     }
 
     @Override
     public void onClick(View v) {
-        double value;
-        Button focusedButton;
-
-        if(v.equals(bKg)){
-            focusedButton = bKg;
-            value = getWeight()/AppConstants.VALUE_WEIGHT_LB;
-        }
-        else {
-            focusedButton = bLb;
-            value = getWeight()*AppConstants.VALUE_WEIGHT_LB;
-        }
+        double value = v.equals(bKg) ? getAppData().getUserWeight()/AppConstants.VALUE_WEIGHT_LB :
+                                        getAppData().getUserWeight()*AppConstants.VALUE_WEIGHT_LB;
+        Button focusedButton = v.equals(bKg) ? bKg : bLb ;
 
         focusButton(focusedButton);
-        saveValue(value);
+        setPersistValue(value);
     }
 
     private void focusButton(Button button){
@@ -137,26 +91,27 @@ public class WeightDialogPreference extends DialogPreference implements View.OnC
         oppositeButton.setActivated(false);
         oppositeButton.setEnabled(true);
 
-        appData.setWeightUnitKg(isUnitKg);
+        getAppData().setWeightUnitKg(isUnitKg);
     }
 
-    private void setText(double value){
+    private void setValueText(double value){
         tvWeightValue.setText(String.format("%.0f", value));
     }
 
-    private void saveValue(double value){
+    @Override
+    public void setPersistValue(Object value) {
         if(shouldPersist()){
-            persistLong(Double.doubleToLongBits(value));
-            setText(value);
+            persistLong(Double.doubleToLongBits((double)value));
+            setValueText((double)value);
         }
     }
 
-    private double getWeight(){
-        long weight = sharedPreferences.getLong(getKey(), 0);
-        return Double.longBitsToDouble(weight);
+    @Override
+    public Object getPersistValue() {
+        return getAppData().getUserWeight();
     }
 
-    public static class WeightPreferenceDialogFragment extends PreferenceDialogFragmentCompat implements OnItemClickListener{
+    public static class WeightPreferenceDialogFragmentCompat extends CustomDialogPreference.CustomPreferenceDialogFragmentCompat implements OnItemClickListener{
 
         private AppData appData;
         private ListView mListView;
@@ -167,13 +122,7 @@ public class WeightDialogPreference extends DialogPreference implements View.OnC
         private double weight;
         private double unit;
 
-        public static WeightPreferenceDialogFragment newInstance(String key) {
-            WeightPreferenceDialogFragment fragment = new WeightPreferenceDialogFragment();
-            Bundle b = new Bundle();
-            b.putString("key", key);
-            fragment.setArguments(b);
-            return fragment;
-        }
+        public WeightPreferenceDialogFragmentCompat(){}
 
         @Override
         protected void onBindDialogView(View view) {
@@ -225,12 +174,6 @@ public class WeightDialogPreference extends DialogPreference implements View.OnC
         @Override
         public void onDialogClosed(boolean b) {
             Log.d(TAG, "onDialogClosed()");
-        }
-
-        @Override
-        public void onDismiss(DialogInterface dialog) {
-            super.onDismiss(dialog);
-            Log.d(TAG, "onDismiss()");
         }
 
         @Override

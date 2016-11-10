@@ -11,21 +11,20 @@ import android.support.v4.content.WakefulBroadcastReceiver;
  * will keep the device in wake state and give time to
  * evoke the service, before it will finish
  */
-public class NotificationWakefulReceiver extends WakefulBroadcastReceiver {
+public class NotificationWakefulBroadcastReceiver extends WakefulBroadcastReceiver {
 
     private static final String ACTION_START_INTENT = "ACTION_START_INTENT";
 
     public static void createAlarm(Context context){
         AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent alarmIntent = getStartPendingIntent(context);
+        PendingIntent startPendingIntent = getStartPendingIntent(context);
         alarmManager.set(AlarmManager.RTC_WAKEUP,
                         System.currentTimeMillis() + 5 * 1000,
-                        alarmIntent);
-
+                        startPendingIntent);
     }
 
     public static PendingIntent getStartPendingIntent(Context context){
-        Intent intent = new Intent(context, NotificationWakefulReceiver.class);
+        Intent intent = new Intent(context, NotificationWakefulBroadcastReceiver.class);
         intent.setAction(ACTION_START_INTENT);
         return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }

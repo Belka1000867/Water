@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/row"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:gravity="center_vertical">
+
+    <!--  ListRow Left sied Thumbnail image -->
+
+    <ImageView
+        android:id="@+id/list_image"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        app:srcCompat="@mipmap/ic_launcher" />
+
+    <!-- Item Name -->
+    <TextView
+        android:id="@+id/txtItemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/list_image"
+        android:layout_toEndOf="@+id/list_image"
+        android:text="Item Name"
+        android:textColor="#040404"
+        android:textSize="15dip"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <!-- progress count -->
+    <TextView
+        android:id="@+id/txtProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="100"
+        android:textColor="#040404"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
+    <!-- Retry button -->
+    <Button
+
+        android:id="@+id/btnRetry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/btnDelete"
+        android:layout_toStartOf="@+id/btnDelete"
+        android:text="Retry" />
+
+    <!-- Delete button -->
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="Delete" />
+
+    <!--&lt;!&ndash; ProgressBar &ndash;&gt;-->
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_below="@id/txtItemName"
+        android:layout_toLeftOf="@+id/txtProgress"
+        android:layout_toStartOf="@+id/txtProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/list_image"
+        android:layout_toEndOf="@+id/list_image"
+        android:progress="100"
+        android:id="@+id/progressBarItem" />
+
+
+</RelativeLayout>

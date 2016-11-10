@@ -21,11 +21,22 @@ import com.home.bel.water.ui.SettingsFragment_;
 import com.home.bel.water.ui.StatisticsFragment_;
 import com.home.bel.water.utils.AppConstants;
 import com.home.bel.water.utils.AppData;
-import com.home.bel.water.utils.DbAdapter.DbHelper;
+import com.home.bel.water.database.DbAdapter.DbHelper;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import static com.home.bel.water.utils.AppConstants.BOT_NAV_ITEM_FORTH;
+import static com.home.bel.water.utils.AppConstants.BOT_NAV_ITEM_MAIN;
+import static com.home.bel.water.utils.AppConstants.BOT_NAV_ITEM_REMINDERS;
+import static com.home.bel.water.utils.AppConstants.BOT_NAV_ITEM_SETTINGS;
+import static com.home.bel.water.utils.AppConstants.BOT_NAV_ITEM_STATISTICS;
+import static com.home.bel.water.utils.AppConstants.BOT_NAV_POSITION_FORTH;
+import static com.home.bel.water.utils.AppConstants.BOT_NAV_POSITION_MAIN;
+import static com.home.bel.water.utils.AppConstants.BOT_NAV_POSITION_REMINDERS;
+import static com.home.bel.water.utils.AppConstants.BOT_NAV_POSITION_SETTINGS;
+import static com.home.bel.water.utils.AppConstants.BOT_NAV_POSITION_STATISTICS;
 
 /**
  * Main activity that contain two fragments:
@@ -39,7 +50,7 @@ import org.androidannotations.annotations.ViewById;
 public class MainActivity extends AppCompatActivity implements AHBottomNavigation.OnTabSelectedListener, MainFragment.MainFragmentListener {
 
     final static String TAG = "Debug_MainActivity";
-
+    final int FRAME_LAYOUT = R.id.framelayout_main;
 
     @ViewById(R.id.framelayout_main)
     FrameLayout mFrameLayout;
@@ -50,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
     @AfterViews
     void afterViews(){
 
-        final int defaultCurrentItem = AppConstants.BOT_NAV_POSITION_MAIN;
+        final int defaultCurrentItem = BOT_NAV_POSITION_MAIN;
 
 //  Create Bottom Navigation Menu with current Item
         createBottomNavigationMenu(defaultCurrentItem);
@@ -58,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
         getSupportFragmentManager()
                 .beginTransaction()
                 .addToBackStack(null)
-                .add(R.id.framelayout_main,
+                .add(FRAME_LAYOUT,
                         createFragment(defaultCurrentItem),
                         createItemDescription(defaultCurrentItem))
                 .commit();
@@ -93,11 +104,11 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
     public void onTabSelected(int position, boolean wasSelected) {
         Log.d(TAG, "Position " + position + " was selected" + wasSelected);
         if(!wasSelected) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.framelayout_main,
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(FRAME_LAYOUT,
                             createFragment(position),
-                            createItemDescription(position)
-                    )
+                            createItemDescription(position))
                     .addToBackStack(null)
                     .commit();
         }
@@ -147,15 +158,15 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
 
     private Fragment createFragment(int position){
         switch (position) {
-            case AppConstants.BOT_NAV_POSITION_SETTINGS:
+            case BOT_NAV_POSITION_SETTINGS:
                 return new SettingsFragment_();
-            case AppConstants.BOT_NAV_POSITION_STATISTICS:
+            case BOT_NAV_POSITION_STATISTICS:
                 return new StatisticsFragment_();
-            case AppConstants.BOT_NAV_POSITION_MAIN:
+            case BOT_NAV_POSITION_MAIN:
                 return new MainFragment_();
-            case AppConstants.BOT_NAV_POSITION_FORTH:
+            case BOT_NAV_POSITION_FORTH:
                 return new ForthFragment_();
-            case AppConstants.BOT_NAV_POSITION_REMINDERS:
+            case BOT_NAV_POSITION_REMINDERS:
                 return new ReminderFragment_();
         }
         throw new IllegalArgumentException();
@@ -163,31 +174,31 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
 
     private String createItemDescription(int position){
         switch (position){
-            case AppConstants.BOT_NAV_POSITION_SETTINGS:
-                return AppConstants.BOT_NAV_ITEM_SETTINGS;
-            case AppConstants.BOT_NAV_POSITION_STATISTICS:
-                return AppConstants.BOT_NAV_ITEM_STATISTICS;
-            case AppConstants.BOT_NAV_POSITION_MAIN:
-                return AppConstants.BOT_NAV_ITEM_MAIN;
-            case AppConstants.BOT_NAV_POSITION_FORTH:
-                return AppConstants.BOT_NAV_ITEM_FORTH;
-            case AppConstants.BOT_NAV_POSITION_REMINDERS:
-                return AppConstants.BOT_NAV_ITEM_REMINDERS;
+            case BOT_NAV_POSITION_SETTINGS:
+                return BOT_NAV_ITEM_SETTINGS;
+            case BOT_NAV_POSITION_STATISTICS:
+                return BOT_NAV_ITEM_STATISTICS;
+            case BOT_NAV_POSITION_MAIN:
+                return BOT_NAV_ITEM_MAIN;
+            case BOT_NAV_POSITION_FORTH:
+                return BOT_NAV_ITEM_FORTH;
+            case BOT_NAV_POSITION_REMINDERS:
+                return BOT_NAV_ITEM_REMINDERS;
         }
         throw new IllegalArgumentException();
     }
 
     private int createPicture(int position){
         switch (position){
-            case AppConstants.BOT_NAV_POSITION_SETTINGS:
+            case BOT_NAV_POSITION_SETTINGS:
                 return R.mipmap.ic_settings;
-            case AppConstants.BOT_NAV_POSITION_STATISTICS:
+            case BOT_NAV_POSITION_STATISTICS:
                 return R.mipmap.ic_statistics;
-            case AppConstants.BOT_NAV_POSITION_MAIN:
+            case BOT_NAV_POSITION_MAIN:
                 return R.mipmap.ic_water;
-            case AppConstants.BOT_NAV_POSITION_FORTH:
+            case BOT_NAV_POSITION_FORTH:
                 return R.mipmap.ic_launcher;
-            case AppConstants.BOT_NAV_POSITION_REMINDERS:
+            case BOT_NAV_POSITION_REMINDERS:
                 return R.mipmap.ic_reminders;
         }
         throw new IllegalArgumentException();
@@ -200,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements AHBottomNavigatio
     @Override
     public void showAmountOfGlassesLeft(int glassesLeft) {
 //        final String title = glassesLeft == 0 ? null : String.valueOf(glassesLeft);
-        mBottomNavigation.setNotification(String.valueOf(glassesLeft), AppConstants.BOT_NAV_POSITION_MAIN);
+        mBottomNavigation.setNotification(String.valueOf(glassesLeft), BOT_NAV_POSITION_MAIN);
     }
 
     @Override

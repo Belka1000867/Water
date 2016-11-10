@@ -29,8 +29,6 @@
 
     <style name="Water.Preference.LeftButton" parent="Base.TextAppearance.AppCompat.Button">
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:layout_marginLeft">@dimen/preference_value_margin_left</item>
-        <item tools:targetApi="17" name="android:layout_marginStart">@dimen/preference_value_margin_left</item>
         <item name="android:textColor">@drawable/selector_preference_textcolor</item>
     </style>
 

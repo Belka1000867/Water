@@ -16,14 +16,14 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".services.NotificationWakefulReceiver"/>
+        <receiver android:name=".services.NotificationWakefulBroadcastReceiver"/>
 
         <!-- Service available only for this application -->
         <service android:name=".services.NotificationIntentService"
             android:exported="false"
             />
 
-        <service android:name=".services.DBIntentService"
+        <service android:name=".database.DbIntentService"
             android:exported="false"
             />
 

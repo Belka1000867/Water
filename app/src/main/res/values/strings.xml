@@ -12,11 +12,13 @@
     <string name="preferences_category_first">First</string>
     <string name="preferences_category_second">Second</string>
     <string name="preferences_category_application">Application settings</string>
+    <string name="preferences_category_schedule">Schedule</string>
 
     <!-- Titles -->
     <string name="preferences_title_weight">Weight</string>
     <string name="preferences_title_gender">Gender</string>
     <string name="preferences_title_volume">Volume Unit</string>
+    <string name="preferences_title_time">Time</string>
 
     <!-- Units -->
     <string name="preferences_gender_male">Male</string>
@@ -25,12 +27,17 @@
     <string name="preferences_volume_oz">Oz</string>
     <string name="preferences_weight_kg">Kg</string>
     <string name="preferences_weight_lb">Lb</string>
+    <string name="preferences_time_12">12-hour</string>
+    <string name="preferences_time_24">24-hour</string>
+    <string name="preferences_title_bedtime">Bedtime</string>
+    <string name="preferences_title_wake">Wake</string>
 
     <!-- Preference keys for XML files
     ! Do not change ! -->
     <string name="preferences_key_weight">key_weight</string>
     <string name="preferences_key_volume">key_volume</string>
     <string name="preferences_key_gender_v4">key_gender</string>
+    <string name="preferences_key_time">key_time</string>
 
     <!-- Do not need -->
     <string name="preferences.key.gender">key.gender</string>

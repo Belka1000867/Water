@@ -11,42 +11,28 @@ import com.home.bel.water.R;
  */
 public class GenderTwoBtnPreference extends TwoBtnPreference{
 
-    public GenderTwoBtnPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
-    public GenderTwoBtnPreference(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
     public GenderTwoBtnPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public GenderTwoBtnPreference(Context context) {
-        super(context);
-    }
-
     @Override
-    void init(Context context) {
-        setValueFirst(AppConstants.MALE);
-        setValueSecond(AppConstants.FEMALE);
+    public void init(Context context) {
 
-        setBtnFirstId(R.id.b_pref_male_v4);
-        setBtnSecondId(R.id.b_pref_female_v4);
+        setButtonIds(R.id.b_pref_male_v4, R.id.b_pref_female_v4);
+        setValues(AppConstants.MALE, AppConstants.FEMALE);
 
         setLayoutResource(R.layout.preference_gender_v4);
     }
 
     @Override
-    void setPersistValue(Object value) {
+    public void setPersistValue(Object value) {
         if(isPersistent()){
             persistString((String)value);
         }
     }
 
     @Override
-    Object getPersistValue() {
+    public Object getPersistValue() {
         String defaultValue = (String)getValueFirst();
         return getPersistedString(defaultValue);
     }
